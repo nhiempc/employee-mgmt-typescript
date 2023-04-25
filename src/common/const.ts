@@ -56,3 +56,5 @@ export const headerPendingEmployee = [
     'Trạng thái',
     'Hành động'
 ];
+
+export const newEmployeeStatus = [1, 3, 4, 6];

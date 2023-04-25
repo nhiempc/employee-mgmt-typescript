@@ -5,7 +5,7 @@ import rootSaga from './sagas/root.saga';
 
 const sagaMiddleware = createSagaMiddleware();
 
-export const store = configureStore({
+const store = configureStore({
     reducer: {
         employee: employeeReducer
     },
@@ -23,3 +23,5 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   unknown,
   Action<string>
 >;
+
+export default store;
