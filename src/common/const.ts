@@ -27,3 +27,32 @@ export const STATUS = {
     18: 'Đã duyệt diễn biến',
     19: 'Đã từ chối diễn biến'
 };
+
+export const headerNewEmployee = [
+    'Mã nhân viên',
+    'Tên nhân viên',
+    'Email',
+    'Số điện thoại',
+    'Mã CCCD/CMT',
+    'Trạng thái',
+    'Thao tác'
+];
+
+export const headerApprovedEmployee = [
+    'Mã nhân viên',
+    'Họ và tên',
+    'Ngày sinh',
+    'Giới tính',
+    'Địa chỉ',
+    'Trạng thái',
+    'Hành động'
+];
+
+export const headerPendingEmployee = [
+    'Mã nhân viên',
+    'Họ Tên',
+    'Email',
+    'Số điện thoại',
+    'Trạng thái',
+    'Hành động'
+];
