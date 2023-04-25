@@ -10,7 +10,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { Drawer } from '@mui/material';
 import { navBarCommon } from '../../../routes/navBarCommon';
 import { Link } from 'react-router-dom';
-import { NavBarCommon } from '../../../models/NavBar';
+import { IChildNavBar, INavBarCommon } from '../../../models/INavBar';
 
 let stateNav = navBarCommon.map((item) => ({
     [item.title]: item.items ? !item.items : undefined
@@ -72,7 +72,7 @@ export default function NavBar({ isDrawer }: IProps) {
                     </ListSubheader>
                 }
             >
-                {navBarCommon.map((navItem: NavBarCommon, index: number) => {
+                {navBarCommon.map((navItem: INavBarCommon, index: number) => {
                     const Icon: any = navItem.icon;
                     return navItem.items ? (
                         <div key={index}>
@@ -97,32 +97,41 @@ export default function NavBar({ isDrawer }: IProps) {
                                 unmountOnExit
                             >
                                 <List component='div' disablePadding>
-                                    {navItem.items.map((subNav, index) => {
-                                        const Icon: any = subNav.icon;
-                                        return (
-                                            <Link
-                                                to={subNav.href}
-                                                key={`subNav ${index}`}
-                                                style={{
-                                                    color: 'white',
-                                                    textDecoration: 'none'
-                                                }}
-                                            >
-                                                <ListItemButton sx={{ pl: 4 }}>
-                                                    <ListItemIcon>
-                                                        <Icon
-                                                            sx={{
-                                                                color: 'white'
-                                                            }}
+                                    {navItem.items.map(
+                                        (
+                                            subNav: IChildNavBar,
+                                            index: number
+                                        ) => {
+                                            const Icon: any = subNav.icon;
+                                            return (
+                                                <Link
+                                                    to={subNav.href}
+                                                    key={`subNav ${index}`}
+                                                    style={{
+                                                        color: 'white',
+                                                        textDecoration: 'none'
+                                                    }}
+                                                >
+                                                    <ListItemButton
+                                                        sx={{ pl: 4 }}
+                                                    >
+                                                        <ListItemIcon>
+                                                            <Icon
+                                                                sx={{
+                                                                    color: 'white'
+                                                                }}
+                                                            />
+                                                        </ListItemIcon>
+                                                        <ListItemText
+                                                            primary={
+                                                                subNav.title
+                                                            }
                                                         />
-                                                    </ListItemIcon>
-                                                    <ListItemText
-                                                        primary={subNav.title}
-                                                    />
-                                                </ListItemButton>
-                                            </Link>
-                                        );
-                                    })}
+                                                    </ListItemButton>
+                                                </Link>
+                                            );
+                                        }
+                                    )}
                                 </List>
                             </Collapse>
                         </div>

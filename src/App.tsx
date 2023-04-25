@@ -1,5 +1,6 @@
+import Routes from './routes/routes';
 function App() {
-    return <div className='App'>Quản lý nhân viên</div>;
+    return <Routes />;
 }
 
 export default App;
