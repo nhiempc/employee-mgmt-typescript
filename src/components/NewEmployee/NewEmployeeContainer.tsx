@@ -16,6 +16,7 @@ import {
     totalEmployeeSelector
 } from '../../reduxSaga/slices/employee.slice';
 import AddEmployeeModalContainer from '../Common/AddEmployeeModal/AddEmployeeModalContainer';
+import EditEmployeeModalContainer from '../Common/EditEmployeeModal/EditEmployeeModalContainer';
 
 const NewEmployeeContainer = () => {
     const { classes } = useStyles();
@@ -69,18 +70,29 @@ const NewEmployeeContainer = () => {
     }, [dispatch]);
 
     const [openAddModal, setOpenAddModal] = useState(false);
+    const [openEditModal, setOpenEditModal] = useState(false);
 
     const handleOpenAddEmployeeInfo = () => {
-        setOpenAddModal(!openAddModal);
+        setOpenAddModal(true);
     };
 
     const handleCloseAddEmployeeInfo = () => {
-        setOpenAddModal(!openAddModal);
+        setOpenAddModal(false);
+    };
+
+    const handleOpenEditEmployeeInfo = () => {
+        setOpenEditModal(true);
+    };
+
+    const handleCloseEditEmployeeInfo = () => {
+        setOpenEditModal(false);
     };
 
     const handleSaveEmployeeInfo = () => {};
 
     const handleRegister = () => {};
+
+    const handleUpdateEmployeeInfo = () => {};
 
     return (
         <>
@@ -104,6 +116,7 @@ const NewEmployeeContainer = () => {
                     infoConditionalArr={[STATUS[2], STATUS[3]]}
                     deleteConditionalArr={[STATUS[1]]}
                     idData={idData}
+                    handleEdit={handleOpenEditEmployeeInfo}
                     headerData={headerNewEmployee}
                     rowData={rowData}
                     isLoading={isLoading}
@@ -121,6 +134,13 @@ const NewEmployeeContainer = () => {
                 isOpen={openAddModal}
                 handleClose={handleCloseAddEmployeeInfo}
                 handleSave={handleSaveEmployeeInfo}
+                handleRegister={handleRegister}
+            />
+            <EditEmployeeModalContainer
+                title={'Chỉnh sửa nhân viên'}
+                isOpen={openEditModal}
+                handleClose={handleCloseEditEmployeeInfo}
+                handleUpdate={handleUpdateEmployeeInfo}
                 handleRegister={handleRegister}
             />
         </>
