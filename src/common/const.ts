@@ -69,3 +69,5 @@ export const manageEmployeeStatus: number[] = [5];
 export const finishEmployeeStatus: number[] = [9, 10, 11, 12, 13];
 
 export const pendingEmployeeStatus: number[] = [2, 3, 8, 16];
+
+export const approvedEmployeeStatus: number[] = [5, 6];
