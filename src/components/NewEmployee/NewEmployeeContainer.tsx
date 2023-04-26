@@ -15,6 +15,7 @@ import {
     isLoadingSelector,
     totalEmployeeSelector
 } from '../../reduxSaga/slices/employee.slice';
+import AddEmployeeModalContainer from '../Common/AddEmployeeModal/AddEmployeeModalContainer';
 
 const NewEmployeeContainer = () => {
     const { classes } = useStyles();
@@ -69,43 +70,60 @@ const NewEmployeeContainer = () => {
 
     const [openAddModal, setOpenAddModal] = useState(false);
 
-    const handleShowAddEmployeeInfo = () => {
+    const handleOpenAddEmployeeInfo = () => {
         setOpenAddModal(!openAddModal);
     };
 
+    const handleCloseAddEmployeeInfo = () => {
+        setOpenAddModal(!openAddModal);
+    };
+
+    const handleSaveEmployeeInfo = () => {};
+
+    const handleRegister = () => {};
+
     return (
-        <Box sx={{ padding: '24px' }}>
-            <Button
-                type='button'
-                variant='contained'
-                startIcon={<PersonAddAltIcon />}
-                className={classes.btn}
-                sx={{
-                    marginBottom: '12px',
-                    backgroundColor: `${process.env.REACT_APP_THEME_COLOR}`
-                }}
-                onClick={handleShowAddEmployeeInfo}
-            >
-                Tạo mới
-            </Button>
-            <ListTemplate
-                maxHeight={550}
-                editConditionalArr={[STATUS[1], STATUS[4], STATUS[6]]}
-                infoConditionalArr={[STATUS[2], STATUS[3]]}
-                deleteConditionalArr={[STATUS[1]]}
-                idData={idData}
-                headerData={headerNewEmployee}
-                rowData={rowData}
-                isLoading={isLoading}
+        <>
+            <Box sx={{ padding: '24px' }}>
+                <Button
+                    type='button'
+                    variant='contained'
+                    startIcon={<PersonAddAltIcon />}
+                    className={classes.btn}
+                    sx={{
+                        marginBottom: '12px',
+                        backgroundColor: `${process.env.REACT_APP_THEME_COLOR}`
+                    }}
+                    onClick={handleOpenAddEmployeeInfo}
+                >
+                    Tạo mới
+                </Button>
+                <ListTemplate
+                    maxHeight={550}
+                    editConditionalArr={[STATUS[1], STATUS[4], STATUS[6]]}
+                    infoConditionalArr={[STATUS[2], STATUS[3]]}
+                    deleteConditionalArr={[STATUS[1]]}
+                    idData={idData}
+                    headerData={headerNewEmployee}
+                    rowData={rowData}
+                    isLoading={isLoading}
+                />
+                <PaginationBase
+                    perPage={perPage}
+                    totalPage={totalPageNum}
+                    pageIndex={page}
+                    changePage={_changePage}
+                    changePerPage={_changePerPage}
+                />
+            </Box>
+            <AddEmployeeModalContainer
+                title={'Tạo mới nhân viên'}
+                isOpen={openAddModal}
+                handleClose={handleCloseAddEmployeeInfo}
+                handleSave={handleSaveEmployeeInfo}
+                handleRegister={handleRegister}
             />
-            <PaginationBase
-                perPage={perPage}
-                totalPage={totalPageNum}
-                pageIndex={page}
-                changePage={_changePage}
-                changePerPage={_changePerPage}
-            />
-        </Box>
+        </>
     );
 };
 

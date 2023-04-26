@@ -33,6 +33,26 @@ export const GENDER: any = {
     1: 'Nam'
 };
 
+export const headerFamilyData: string[] = [
+    'STT',
+    'Họ và tên',
+    'Giới tính',
+    'Ngày sinh',
+    'Số CCCD',
+    'Mối quan hệ',
+    'Địa chỉ',
+    'Hành động'
+];
+
+export const headerCertificateData: string[] = [
+    'STT',
+    'Tên văn bằng',
+    'Ngày cấp',
+    'Nội dung',
+    'Lĩnh vực',
+    'Hành động'
+];
+
 export const headerNewEmployee: string[] = [
     'Mã nhân viên',
     'Tên nhân viên',
