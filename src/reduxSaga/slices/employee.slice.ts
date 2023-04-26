@@ -1,39 +1,56 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { IEmployeeInfo } from '../../models/IEmployee';
 import { RootState } from '../store';
 
-const initState = {
-    employeeNew: {
-        employeeInfo: { status: 1, photoUrl: '' },
-        certificates: [],
-        familyRelations: []
-    },
-    employeeEdit: {},
-    employeeById: {},
+export interface EmployeeState {
+    employeeByStatus: IEmployeeInfo[];
+    isLoading: boolean;
+    totalEmployee: number;
+}
+
+export interface FetchEmployeePayload {
+    status: number[];
+    page: number;
+    perPage: number;
+}
+
+export interface FetchEmployeeCountPayload {
+    status: number[];
+}
+
+const initState: EmployeeState = {
     employeeByStatus: [],
-    isLoading: false
+    isLoading: false,
+    totalEmployee: 0
 };
 
 const employeeSlice = createSlice({
     name: 'employee',
     initialState: initState,
     reducers: {
-        getEmployeeById(state, action) {
-            state.employeeById = action.payload;
+        fetchEmployeeByStatus(
+            state,
+            action: PayloadAction<FetchEmployeePayload>
+        ) {
+            state.isLoading = true;
         },
-        getEmployeeByStatus(state, action) {
-            state.employeeByStatus = action.payload;
+        fetchEmployeeCount(
+            state,
+            action: PayloadAction<FetchEmployeeCountPayload>
+        ) {
+            state.isLoading = true;
         },
-        setEmployeeEdit(state, action) {
-            state.employeeEdit = action.payload;
-        },
-        setEmployeeNew(state, action) {
-            state.employeeNew = action.payload;
-        },
-        getEmployeeSuccess(state, action) {
+        fetchEmployeeSuccess(state) {
             state.isLoading = false;
         },
-        getEmployeeFail(state, action) {
+        fetchEmployeeFail(state) {
             state.isLoading = true;
+        },
+        setEmployeeByStatus(state, action: PayloadAction<IEmployeeInfo[]>) {
+            state.employeeByStatus = action.payload;
+        },
+        setEmployeeCount(state, action: PayloadAction<number>) {
+            state.totalEmployee = action.payload;
         }
     }
 });
@@ -42,11 +59,11 @@ const employeeSlice = createSlice({
 export const employeeActions = employeeSlice.actions;
 
 // Selectors
-export const employeeNewSelector = (state: RootState) => state.employee.employeeNew;
-export const employeeEditSelector = (state: RootState) => state.employee.employeeEdit;
-export const employeeByIdSelector = (state: RootState) => state.employee.employeeById;
 export const employeeByStatusSelector = (state: RootState) =>
     state.employee.employeeByStatus;
+export const isLoadingSelector = (state: RootState) => state.employee.isLoading;
+export const totalEmployeeSelector = (state: RootState) =>
+    state.employee.totalEmployee;
 
 // Reducer
 const employeeReducer = employeeSlice.reducer;

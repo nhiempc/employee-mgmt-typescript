@@ -6,20 +6,22 @@ import {
     GET_TOTAL_RECORD
 } from '../common';
 import { HttpMethod, protectedFetcher } from '../helpers/fetchHelper';
+import { IEmployeeInfo } from '../models/IEmployee';
+import { IDataList } from '../models/IResponse';
 
 export const employeeApi = {
     getEmployeeByStatus(
         status: number[],
         page: number = 1,
         perPage: number = 10
-    ) {
+    ): Promise<IDataList<IEmployeeInfo>> {
         let _status = status.toString();
         return protectedFetcher(
             `${GET_EMPLOYEES}?statuses=${_status}&page=${page}&size=${perPage}`,
             HttpMethod.GET
         );
     },
-    getEmployeeCount(status: number[]) {
+    getEmployeeCount(status: number[]): Promise<IDataList<number>> {
         let _status = status.toString();
         return protectedFetcher(
             `${GET_EMPLOYEES}/${GET_TOTAL_RECORD}?statuses=${_status}`,

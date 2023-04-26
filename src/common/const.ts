@@ -5,7 +5,7 @@ export const GET_PROMOTE = 'promote';
 export const GET_INCREASE_SALARY = 'increase-salary';
 export const GET_PROPOSAL_CONSULTATION = 'propose-consult';
 
-export const STATUS = {
+export const STATUS: any = {
     // 1 - 14: Employee Status
     // 15 - 19: Cập nhật diễn biến Status
     1: 'Lưu mới',
