@@ -1,9 +1,9 @@
-export const GET_EMPLOYEES = 'employees';
-export const GET_TOTAL_RECORD = 'total';
-export const GET_TOKEN = 'oauth/token';
-export const GET_PROMOTE = 'promote';
-export const GET_INCREASE_SALARY = 'increase-salary';
-export const GET_PROPOSAL_CONSULTATION = 'propose-consult';
+export const GET_EMPLOYEES: string = 'employees';
+export const GET_TOTAL_RECORD: string = 'total';
+export const GET_TOKEN: string = 'oauth/token';
+export const GET_PROMOTE: string = 'promote';
+export const GET_INCREASE_SALARY: string = 'increase-salary';
+export const GET_PROPOSAL_CONSULTATION: string = 'propose-consult';
 
 export const STATUS: any = {
     // 1 - 14: Employee Status
@@ -28,7 +28,12 @@ export const STATUS: any = {
     19: 'Đã từ chối diễn biến'
 };
 
-export const headerNewEmployee = [
+export const GENDER: any = {
+    0: 'Nữ',
+    1: 'Nam'
+};
+
+export const headerNewEmployee: string[] = [
     'Mã nhân viên',
     'Tên nhân viên',
     'Email',
@@ -38,7 +43,7 @@ export const headerNewEmployee = [
     'Thao tác'
 ];
 
-export const headerApprovedEmployee = [
+export const headerApprovedEmployee: string[] = [
     'Mã nhân viên',
     'Họ và tên',
     'Ngày sinh',
@@ -48,7 +53,7 @@ export const headerApprovedEmployee = [
     'Hành động'
 ];
 
-export const headerPendingEmployee = [
+export const headerPendingEmployee: string[] = [
     'Mã nhân viên',
     'Họ Tên',
     'Email',
@@ -57,4 +62,6 @@ export const headerPendingEmployee = [
     'Hành động'
 ];
 
-export const newEmployeeStatus = [1, 3, 4, 6];
+export const newEmployeeStatus: number[] = [1, 3, 4, 6];
+
+export const manageEmployeeStatus: number[] = [5];

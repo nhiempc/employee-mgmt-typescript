@@ -29,6 +29,7 @@ const NewEmployeeContainer = () => {
     const rowData: any[][] = [];
     const idData: number[] = [];
     let totalPageNum = 0;
+
     if (totalEmployee % perPage === 0) {
         totalPageNum = totalEmployee / perPage;
     } else {
