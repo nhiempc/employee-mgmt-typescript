@@ -150,107 +150,110 @@ const ListTemplate = ({
                                 )}
                         </StyledTableRow>
                     </TableHead>
-                    <TableBody>
-                        {rows &&
-                            rows.map((r, i) => (
-                                <StyledTableRow key={'r-' + i}>
-                                    {r.map((c, k) => (
+                    {!isLoading && (
+                        <TableBody>
+                            {rows &&
+                                rows.map((r, i) => (
+                                    <StyledTableRow key={'r-' + i}>
+                                        {r.map((c, k) => (
+                                            <StyledTableCell
+                                                key={'c-' + i + '-' + k}
+                                                align='left'
+                                            >
+                                                {c}
+                                            </StyledTableCell>
+                                        ))}
+
                                         <StyledTableCell
-                                            key={'c-' + i + '-' + k}
-                                            align='left'
+                                            key={'c-' + i + '-action'}
+                                            align='right'
                                         >
-                                            {c}
+                                            {_isEdit && !isNaN(ids[i]) && (
+                                                <EditIcon
+                                                    color='info'
+                                                    onClick={() =>
+                                                        _handleEdit(ids[i])
+                                                    }
+                                                    sx={{
+                                                        cursor: 'pointer',
+
+                                                        padding: '0 2px'
+                                                    }}
+                                                />
+                                            )}
+
+                                            {_isEditArray[i] &&
+                                                !isNaN(ids[i]) && (
+                                                    <EditIcon
+                                                        color='info'
+                                                        onClick={() =>
+                                                            _handleEdit(ids[i])
+                                                        }
+                                                        sx={{
+                                                            cursor: 'pointer',
+
+                                                            padding: '0 2px'
+                                                        }}
+                                                    />
+                                                )}
+
+                                            {_isInfo && (
+                                                <VisibilityIcon
+                                                    color='success'
+                                                    onClick={() =>
+                                                        _handleShowInfo(ids[i])
+                                                    }
+                                                    sx={{
+                                                        cursor: 'pointer',
+                                                        padding: '0 2px'
+                                                    }}
+                                                />
+                                            )}
+
+                                            {_isInfoArray[i] && (
+                                                <VisibilityIcon
+                                                    color='success'
+                                                    onClick={() =>
+                                                        _handleShowInfo(ids[i])
+                                                    }
+                                                    sx={{
+                                                        cursor: 'pointer',
+                                                        padding: '0 2px'
+                                                    }}
+                                                />
+                                            )}
+
+                                            {_isDelete && !isNaN(ids[i]) && (
+                                                <DeleteIcon
+                                                    color='primary'
+                                                    onClick={() =>
+                                                        _handleDelete(ids[i])
+                                                    }
+                                                    sx={{
+                                                        cursor: 'pointer',
+                                                        color: '#ff1943',
+                                                        padding: '0 2px'
+                                                    }}
+                                                />
+                                            )}
+                                            {_isDeleteArray[i] && (
+                                                <DeleteIcon
+                                                    color='primary'
+                                                    onClick={() =>
+                                                        _handleDelete(ids[i])
+                                                    }
+                                                    sx={{
+                                                        cursor: 'pointer',
+                                                        color: '#ff1943',
+                                                        padding: '0 2px'
+                                                    }}
+                                                />
+                                            )}
                                         </StyledTableCell>
-                                    ))}
-
-                                    <StyledTableCell
-                                        key={'c-' + i + '-action'}
-                                        align='right'
-                                    >
-                                        {_isEdit && !isNaN(ids[i]) && (
-                                            <EditIcon
-                                                color='info'
-                                                onClick={() =>
-                                                    _handleEdit(ids[i])
-                                                }
-                                                sx={{
-                                                    cursor: 'pointer',
-
-                                                    padding: '0 2px'
-                                                }}
-                                            />
-                                        )}
-
-                                        {_isEditArray[i] && !isNaN(ids[i]) && (
-                                            <EditIcon
-                                                color='info'
-                                                onClick={() =>
-                                                    _handleEdit(ids[i])
-                                                }
-                                                sx={{
-                                                    cursor: 'pointer',
-
-                                                    padding: '0 2px'
-                                                }}
-                                            />
-                                        )}
-
-                                        {_isInfo && (
-                                            <VisibilityIcon
-                                                color='success'
-                                                onClick={() =>
-                                                    _handleShowInfo(ids[i])
-                                                }
-                                                sx={{
-                                                    cursor: 'pointer',
-                                                    padding: '0 2px'
-                                                }}
-                                            />
-                                        )}
-
-                                        {_isInfoArray[i] && (
-                                            <VisibilityIcon
-                                                color='success'
-                                                onClick={() =>
-                                                    _handleShowInfo(ids[i])
-                                                }
-                                                sx={{
-                                                    cursor: 'pointer',
-                                                    padding: '0 2px'
-                                                }}
-                                            />
-                                        )}
-
-                                        {_isDelete && !isNaN(ids[i]) && (
-                                            <DeleteIcon
-                                                color='primary'
-                                                onClick={() =>
-                                                    _handleDelete(ids[i])
-                                                }
-                                                sx={{
-                                                    cursor: 'pointer',
-                                                    color: '#ff1943',
-                                                    padding: '0 2px'
-                                                }}
-                                            />
-                                        )}
-                                        {_isDeleteArray[i] && (
-                                            <DeleteIcon
-                                                color='primary'
-                                                onClick={() =>
-                                                    _handleDelete(ids[i])
-                                                }
-                                                sx={{
-                                                    cursor: 'pointer',
-                                                    color: '#ff1943',
-                                                    padding: '0 2px'
-                                                }}
-                                            />
-                                        )}
-                                    </StyledTableCell>
-                                </StyledTableRow>
-                            ))}
-                    </TableBody>
+                                    </StyledTableRow>
+                                ))}
+                        </TableBody>
+                    )}
                 </Table>
                 {rows.length === 0 && isLoading === false && (
                     <div

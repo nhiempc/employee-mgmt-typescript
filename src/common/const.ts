@@ -65,3 +65,5 @@ export const headerPendingEmployee: string[] = [
 export const newEmployeeStatus: number[] = [1, 3, 4, 6];
 
 export const manageEmployeeStatus: number[] = [5];
+
+export const finishEmployeeStatus: number[] = [9, 10, 11, 12, 13];
