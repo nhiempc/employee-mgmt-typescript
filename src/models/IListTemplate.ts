@@ -9,7 +9,7 @@ export type IListTemplate = {
     isDelete?: boolean;
     handleRequestSort?: (e: any, f: string) => void;
     handleShowInfo?: (id: number) => void;
-    handleEdit?: (id: number | undefined) => void;
+    handleEdit?: (id: number) => void;
     handleDelete?: (id: number) => void;
     order?: IOrder;
     orderBy?: string;

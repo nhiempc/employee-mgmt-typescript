@@ -14,6 +14,7 @@ import { initCV } from '../../models/ICV';
 import {
     IEmployee,
     INewEmployee,
+    initEmployee,
     initEmployeeInfo
 } from '../../models/IEmployee';
 import { IForm } from '../../models/IForm';
@@ -102,11 +103,8 @@ const NewEmployeeContainer = () => {
     const [alertContent, setAlertContent] = useState<string>('');
     const [open, setOpen] = useState<boolean>(false);
     const [deleteId, setDeleteId] = useState<number>(0);
-    const [newEmployee, setNewEmployee] = useState<IEmployee>({
-        employeeInfo: initEmployeeInfo,
-        certificates: [],
-        familyRelations: []
-    });
+    const [newEmployee, setNewEmployee] = useState<IEmployee>(initEmployee);
+    const [editEmployee, setEditEmployee] = useState<IEmployee>(initEmployee);
     const [profileData, setProfileData] = useState<IForm>({
         employeeId: 0,
         cv: initCV,
@@ -124,10 +122,6 @@ const NewEmployeeContainer = () => {
 
     const handleCloseAddEmployeeInfo = () => {
         setOpenAddModal(false);
-    };
-
-    const handleOpenEditEmployeeInfo = () => {
-        setOpenEditModal(true);
     };
 
     const handleCloseEditEmployeeInfo = () => {
@@ -273,11 +267,36 @@ const NewEmployeeContainer = () => {
         });
     };
 
+    const handleEditEmployeeClick = (employeeId: number) => {
+        setOpenEditModal(true);
+        employeeApi.getEmployeeById(employeeId).then((respone) => {
+            if (respone) {
+                setEditEmployee(respone.data);
+            }
+        });
+    };
+
     const handleRegister = () => {
         setIsOpenProfileModal(true);
     };
 
-    const handleUpdateEmployeeInfo = () => {};
+    const handleUpdateEmployeeInfo = (newEmployee: IEmployee) => {
+        const employeeId = newEmployee.employeeInfo.employeeId;
+        employeeApi
+            .updateEmployee(Number(employeeId), newEmployee)
+            .then((respone) => {
+                if (respone && respone.code === SUCCESS_CODE) {
+                    handleShowAlert('success', 'Cập nhật thông tin thành công');
+                    setNewEmployee(respone.data);
+                    dispatch(employeeActions.updateEmployee(respone.data));
+                } else {
+                    handleShowAlert('warning', respone.message);
+                }
+            })
+            .catch((err) => {
+                handleShowAlert('error', errorMessage);
+            });
+    };
 
     return (
         <>
@@ -301,7 +320,7 @@ const NewEmployeeContainer = () => {
                     infoConditionalArr={[STATUS[2], STATUS[3]]}
                     deleteConditionalArr={[STATUS[1]]}
                     idData={idData}
-                    handleEdit={handleOpenEditEmployeeInfo}
+                    handleEdit={handleEditEmployeeClick}
                     headerData={headerNewEmployee}
                     rowData={rowData}
                     isLoading={isLoading}
@@ -326,6 +345,7 @@ const NewEmployeeContainer = () => {
             <EditEmployeeModalContainer
                 title={'Chỉnh sửa nhân viên'}
                 isOpen={openEditModal}
+                employeeData={editEmployee}
                 handleClose={handleCloseEditEmployeeInfo}
                 handleUpdate={handleUpdateEmployeeInfo}
                 handleRegister={handleRegister}

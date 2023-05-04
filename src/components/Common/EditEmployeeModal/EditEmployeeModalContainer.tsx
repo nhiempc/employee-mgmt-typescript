@@ -1,3 +1,5 @@
+import CloseIcon from '@mui/icons-material/Close';
+import { TabContext, TabList } from '@mui/lab';
 import {
     Box,
     Button,
@@ -7,46 +9,19 @@ import {
     DialogTitle,
     IconButton,
     Tab,
-    Tabs,
-    Typography,
     styled
 } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import useStyles from './styles';
+import { Formik } from 'formik';
 import { useState } from 'react';
-import EmployeeInfoTab from './EmployeeInfoTab';
+import { employeeInfoValidationSchema } from '../../../common';
+import { IEmployee } from '../../../models/IEmployee';
+import { useAppSelector } from '../../../reduxSaga/hooks';
+import { newEmployeeSelector } from '../../../reduxSaga/slices/employee.slice';
+import { TabPanel } from '../TabContextCustom/TabPanel';
 import CertificateTab from './CertificateTab';
+import EmployeeInfoTab from './EmployeeInfoTab';
 import FamifyInfoTab from './FamifyInfoTab';
-
-function TabPanel(props: any) {
-    const { children, value, index, ...other } = props;
-
-    const handleChangeTabContent = (event: any) => {};
-
-    return (
-        <div
-            onChange={handleChangeTabContent}
-            role='tabpanel'
-            hidden={value !== index}
-            id={`simple-tabpanel-${index}`}
-            aria-labelledby={`simple-tab-${index}`}
-            {...other}
-        >
-            {value === index && (
-                <Box sx={{ p: 0 }}>
-                    <Typography component={'div'}>{children}</Typography>
-                </Box>
-            )}
-        </div>
-    );
-}
-
-function a11yProps(index: number) {
-    return {
-        id: `simple-tab-${index}`,
-        'aria-controls': `simple-tabpanel-${index}`
-    };
-}
+import useStyles from './styles';
 
 function BootstrapDialogTitle(props: any) {
     const { children, onClose, ...other } = props;
@@ -88,8 +63,9 @@ type IProps = {
     isOpen: boolean;
     title: string;
     handleClose: () => void;
-    handleUpdate: () => void;
+    handleUpdate: (newEmployee: IEmployee) => void;
     handleRegister: () => void;
+    employeeData: IEmployee;
 };
 
 const EditEmployeeModalContainer: React.FunctionComponent<IProps> = ({
@@ -97,83 +73,151 @@ const EditEmployeeModalContainer: React.FunctionComponent<IProps> = ({
     title,
     handleClose,
     handleUpdate,
-    handleRegister
+    handleRegister,
+    employeeData
 }) => {
     const { classes } = useStyles();
 
-    const [value, setValue] = useState<number>(0);
+    const [value, setValue] = useState<string>('1');
+    const {
+        certificates: certificatesNew,
+        familyRelations: familyRelationsNew
+    } = useAppSelector(newEmployeeSelector);
 
     const handleCancel = () => {
         handleClose();
     };
 
-    const handleChangeTab = (event: React.SyntheticEvent, newValue: number) => {
+    const { employeeInfo, certificates, familyRelations } = employeeData;
+
+    const handleChangeTab = (
+        event: React.SyntheticEvent,
+        newValue: string,
+        errors: any,
+        touched: any
+    ) => {
+        // if (isEmptyObject(errors) && !isEmptyObject(touched)) {
+        //     setValue(newValue);
+        // }
         setValue(newValue);
     };
 
     return (
-        <BootstrapDialog
-            onClose={handleCancel}
-            aria-labelledby='customized-dialog-title'
-            open={isOpen}
-            fullWidth
-            maxWidth={'md'}
+        <Formik
+            initialValues={{
+                ...employeeInfo,
+                dateOfBirth: employeeInfo.dateOfBirth?.split(' ')[0]
+            }}
+            onSubmit={() => {}}
+            enableReinitialize
+            validationSchema={employeeInfoValidationSchema}
         >
-            <BootstrapDialogTitle
-                id='customized-dialog-title'
-                onClose={handleCancel}
-            >
-                {title}
-            </BootstrapDialogTitle>
-            <DialogContent dividers className={classes.modalContent}>
-                <Box>
-                    <Tabs
-                        value={value}
-                        onChange={handleChangeTab}
-                        aria-label='basic tabs example'
+            {(formikProps) => {
+                const { values, errors, touched } = formikProps;
+
+                return (
+                    <BootstrapDialog
+                        onClose={handleCancel}
+                        aria-labelledby='customized-dialog-title'
+                        open={isOpen}
+                        fullWidth
+                        maxWidth={'md'}
                     >
-                        <Tab label='Thông tin nhân viên' {...a11yProps(0)} />
-                        <Tab label='Thông tin văn bằng' {...a11yProps(1)} />
-                        <Tab label='Quan hệ gia đình' {...a11yProps(2)} />
-                    </Tabs>
-                </Box>
-                <TabPanel value={value} index={0}>
-                    <EmployeeInfoTab />
-                </TabPanel>
-                <TabPanel value={value} index={1}>
-                    <CertificateTab />
-                </TabPanel>
-                <TabPanel value={value} index={2}>
-                    <FamifyInfoTab />
-                </TabPanel>
-            </DialogContent>
-            <DialogActions className={classes.dialogActionWrapper}>
-                <Button
-                    variant='contained'
-                    color='error'
-                    autoFocus
-                    onClick={handleCancel}
-                >
-                    Hủy
-                </Button>
-                <Button
-                    variant='contained'
-                    color='warning'
-                    autoFocus
-                    onClick={() => handleUpdate()}
-                >
-                    Cập nhật
-                </Button>
-                <Button
-                    variant='contained'
-                    color='primary'
-                    autoFocus
-                    onClick={handleRegister}
-                >
-                    Đăng ký
-                </Button>
-            </DialogActions>
-        </BootstrapDialog>
+                        <BootstrapDialogTitle
+                            id='customized-dialog-title'
+                            onClose={handleCancel}
+                        >
+                            {title}
+                        </BootstrapDialogTitle>
+                        <DialogContent
+                            dividers
+                            className={classes.modalContent}
+                        >
+                            <TabContext value={value}>
+                                <Box>
+                                    <TabList
+                                        value={value}
+                                        onChange={(
+                                            e: React.SyntheticEvent,
+                                            newValue: string
+                                        ) =>
+                                            handleChangeTab(
+                                                e,
+                                                newValue,
+                                                errors,
+                                                touched
+                                            )
+                                        }
+                                        aria-label='basic tabs example'
+                                    >
+                                        <Tab
+                                            label='Thông tin nhân viên'
+                                            value='1'
+                                        />
+                                        <Tab
+                                            label='Thông tin văn bằng'
+                                            value='2'
+                                        />
+                                        <Tab
+                                            label='Quan hệ gia đình'
+                                            value='3'
+                                        />
+                                    </TabList>
+                                </Box>
+                                <TabPanel value='1'>
+                                    <EmployeeInfoTab
+                                        employeeInfo={values}
+                                        errors={errors}
+                                    />
+                                </TabPanel>
+                                <TabPanel value='2'>
+                                    <CertificateTab
+                                        certificates={certificates}
+                                    />
+                                </TabPanel>
+                                <TabPanel value='3'>
+                                    <FamifyInfoTab
+                                        familyRelations={familyRelations}
+                                    />
+                                </TabPanel>
+                            </TabContext>
+                        </DialogContent>
+                        <DialogActions className={classes.dialogActionWrapper}>
+                            <Button
+                                variant='contained'
+                                color='error'
+                                autoFocus
+                                onClick={handleCancel}
+                            >
+                                Hủy
+                            </Button>
+                            <Button
+                                variant='contained'
+                                color='warning'
+                                autoFocus
+                                onClick={() =>
+                                    handleUpdate({
+                                        employeeInfo: values,
+                                        certificates: certificatesNew,
+                                        familyRelations: familyRelationsNew
+                                    })
+                                }
+                            >
+                                Cập nhật
+                            </Button>
+                            <Button
+                                variant='contained'
+                                color='primary'
+                                autoFocus
+                                onClick={handleRegister}
+                            >
+                                Đăng ký
+                            </Button>
+                        </DialogActions>
+                    </BootstrapDialog>
+                );
+            }}
+        </Formik>
     );
 };
 

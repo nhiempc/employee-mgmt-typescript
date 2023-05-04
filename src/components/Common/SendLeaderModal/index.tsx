@@ -11,12 +11,11 @@ import {
     Typography,
     styled
 } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 // styles
 import { leaderOptions } from '../../../common';
 import { IRegister, initRegister } from '../../../models/IRegister';
 import useStyles, { InputLabelProps } from './styles';
-import { isEmptyObject } from '../../../helpers/common';
 
 function BootstrapDialogTitle(props: any) {
     const { children, onClose, ...other } = props;
@@ -76,7 +75,6 @@ const SendLeaderModal: React.FunctionComponent<IProps> = ({
         status: status
     });
     const [errors, setErrors] = useState<any>({ error: 'error' });
-    const [isValid, setIsValid] = useState<boolean>(false);
 
     const handleChangeRegisterInfo = (event: any) => {
         let { name, value } = event.target;
@@ -100,14 +98,6 @@ const SendLeaderModal: React.FunctionComponent<IProps> = ({
             setRegisterInfo({ ...registerInfo, [name]: value, status: status });
         }
     };
-
-    useEffect(() => {
-        if (isEmptyObject(errors)) {
-            setIsValid(true);
-        } else {
-            setIsValid(false);
-        }
-    }, [errors]);
 
     return (
         <BootstrapDialog
@@ -240,7 +230,6 @@ const SendLeaderModal: React.FunctionComponent<IProps> = ({
                     variant='contained'
                     color='primary'
                     autoFocus
-                    disabled={!isValid}
                     onClick={() => handleSendLeader(registerInfo)}
                 >
                     Trình lãnh đạo

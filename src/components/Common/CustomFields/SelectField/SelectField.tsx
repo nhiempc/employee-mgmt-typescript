@@ -42,7 +42,8 @@ function SelectField(props: any) {
         variant,
         SelectProps,
         error,
-        helperText
+        helperText,
+        value
     } = props;
     const { name, onBlur } = field;
     const handleSelectOptionChange = (event: any) => {
@@ -76,10 +77,11 @@ function SelectField(props: any) {
             onBlur={onBlur}
             select={select}
             variant={variant}
+            value={value}
             SelectProps={SelectProps}
         >
             {options.map((option: any, index: number) => (
-                <option key={index} value={option.value}>
+                <option key={index} defaultValue={value} value={option.value}>
                     {option.label}
                 </option>
             ))}

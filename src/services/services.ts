@@ -6,7 +6,7 @@ import {
     GET_TOTAL_RECORD
 } from '../common';
 import { HttpMethod, protectedFetcher } from '../helpers/fetchHelper';
-import { IEmployeeInfo, INewEmployee } from '../models/IEmployee';
+import { IEmployee, IEmployeeInfo, INewEmployee } from '../models/IEmployee';
 import { IForm } from '../models/IForm';
 import { IRegister } from '../models/IRegister';
 import { IDataList } from '../models/IResponse';
@@ -40,6 +40,13 @@ export const employeeApi = {
         return protectedFetcher(
             `${GET_EMPLOYEES}`,
             HttpMethod.POST,
+            JSON.stringify(employee)
+        );
+    },
+    updateEmployee(employeeId: number, employee: IEmployee) {
+        return protectedFetcher(
+            `${GET_EMPLOYEES}/${employeeId}`,
+            HttpMethod.PUT,
             JSON.stringify(employee)
         );
     },

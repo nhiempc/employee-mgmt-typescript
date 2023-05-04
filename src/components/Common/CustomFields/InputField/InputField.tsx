@@ -57,7 +57,7 @@ function InputField(props: any) {
             size={size}
             name={name}
             id={name}
-            value={value}
+            value={value ?? ''}
             onChange={onChange}
             onBlur={onBlur}
         />

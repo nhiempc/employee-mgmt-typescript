@@ -2,6 +2,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { initEmployeeInfo } from '../../common';
 import {
     ICertificates,
+    IEmployee,
     IEmployeeInfo,
     IFamilyRelations,
     INewEmployee,
@@ -73,14 +74,35 @@ const employeeSlice = createSlice({
         addCertificates(state, action: PayloadAction<ICertificates>) {
             state.newEmployee.certificates.push(action.payload);
         },
+        deleteCertificate(state, action: PayloadAction<number>) {
+            const certificateRest = state.newEmployee.certificates.filter(
+                (item) => item.certificateId !== action.payload
+            );
+            state.newEmployee.certificates = certificateRest;
+        },
         addFamilyMember(state, action: PayloadAction<IFamilyRelations>) {
             state.newEmployee.familyRelations.push(action.payload);
+        },
+        deleteFamilyMember(state, action: PayloadAction<number>) {
+            const familyMembersRest = state.newEmployee.familyRelations.filter(
+                (item) => item.familyId !== action.payload
+            );
+            state.newEmployee.familyRelations = familyMembersRest;
         },
         deleteEmployee(state, action: PayloadAction<number>) {
             let index = state.employeeByStatus.findIndex(
                 (item) => item.employeeId === action.payload
             );
             state.employeeByStatus.splice(index, 1);
+        },
+        updateEmployee(state, action: PayloadAction<IEmployee>) {
+            let employeeId = action.payload.employeeInfo.employeeId;
+            let index = state.employeeByStatus.findIndex(
+                (item) => item.employeeId === employeeId
+            );
+            const newList = [...state.employeeByStatus];
+            newList[index] = action.payload.employeeInfo;
+            state.employeeByStatus = newList;
         }
     }
 });

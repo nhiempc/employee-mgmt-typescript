@@ -107,6 +107,12 @@ export type IEmployee = {
     familyRelations: IFamilyRelations[];
 };
 
+export const initEmployee = {
+    employeeInfo: initEmployeeInfo,
+    certificates: [],
+    familyRelations: []
+};
+
 export type INewEmployee = {
     employeeInfo: INewEmployeeInfo;
     certificates: ICertificates[];
