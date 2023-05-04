@@ -10,15 +10,9 @@ import {
     newEmployeeStatus
 } from '../../common';
 import usePagination from '../../hooks/usePagination';
-import { initCV } from '../../models/ICV';
-import {
-    IEmployee,
-    INewEmployee,
-    initEmployee,
-    initEmployeeInfo
-} from '../../models/IEmployee';
-import { IForm } from '../../models/IForm';
-import { initResume } from '../../models/IResume';
+import { IEmployee, INewEmployee, initEmployee } from '../../models/IEmployee';
+import { IForm, initForm } from '../../models/IForm';
+import { IRegister } from '../../models/IRegister';
 import { useAppDispatch, useAppSelector } from '../../reduxSaga/hooks';
 import {
     employeeActions,
@@ -38,7 +32,6 @@ import CustomizedSnackbars from '../Common/SnackBarCustom';
 import { AlertColor } from '../Common/SnackBarCustom/SnackBarCustom';
 import ViewProfileModal from '../Common/ViewProfileModal';
 import { useStyles } from './style';
-import { IRegister } from '../../models/IRegister';
 
 const NewEmployeeContainer = () => {
     const { classes } = useStyles();
@@ -105,16 +98,8 @@ const NewEmployeeContainer = () => {
     const [deleteId, setDeleteId] = useState<number>(0);
     const [newEmployee, setNewEmployee] = useState<IEmployee>(initEmployee);
     const [editEmployee, setEditEmployee] = useState<IEmployee>(initEmployee);
-    const [profileData, setProfileData] = useState<IForm>({
-        employeeId: 0,
-        cv: initCV,
-        resume: initResume
-    });
-    const [employee, setEmployee] = useState<IEmployee>({
-        employeeInfo: initEmployeeInfo,
-        certificates: [],
-        familyRelations: []
-    });
+    const [profileData, setProfileData] = useState<IForm>(initForm);
+    const [employee, setEmployee] = useState<IEmployee>(initEmployee);
 
     const handleOpenAddEmployeeInfo = () => {
         setOpenAddModal(true);

@@ -78,6 +78,27 @@ export const employeeApi = {
             `${GET_EMPLOYEES}/${employeeId}/form`,
             HttpMethod.GET
         );
+    },
+    rejectProfile(employeeId: number, rejectData: any) {
+        return protectedFetcher(
+            `${GET_EMPLOYEES}/${employeeId}/status`,
+            HttpMethod.PUT,
+            JSON.stringify(rejectData)
+        );
+    },
+    approvalProfile(employeeId: number, status: number) {
+        return protectedFetcher(
+            `${GET_EMPLOYEES}/${employeeId}/status`,
+            HttpMethod.PUT,
+            JSON.stringify({ status: status })
+        );
+    },
+    requiredSupplementProfile(employeeId: number, requiredSupplementData: any) {
+        return protectedFetcher(
+            `${GET_EMPLOYEES}/${employeeId}/status`,
+            HttpMethod.PUT,
+            JSON.stringify(requiredSupplementData)
+        );
     }
 };
 

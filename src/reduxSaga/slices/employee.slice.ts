@@ -15,6 +15,7 @@ export interface EmployeeState {
     newEmployee: INewEmployee;
     isLoading: boolean;
     totalEmployee: number;
+    currentStatus: number | null;
 }
 
 export interface FetchEmployeePayload {
@@ -37,7 +38,8 @@ const initState: EmployeeState = {
         familyRelations: []
     },
     isLoading: false,
-    totalEmployee: 0
+    totalEmployee: 0,
+    currentStatus: null
 };
 
 const employeeSlice = createSlice({
@@ -103,6 +105,9 @@ const employeeSlice = createSlice({
             const newList = [...state.employeeByStatus];
             newList[index] = action.payload.employeeInfo;
             state.employeeByStatus = newList;
+        },
+        addCurrentStatus(state, action: PayloadAction<number>) {
+            state.currentStatus = action.payload;
         }
     }
 });
@@ -118,6 +123,8 @@ export const totalEmployeeSelector = (state: RootState) =>
     state.employee.totalEmployee;
 export const newEmployeeSelector = (state: RootState) =>
     state.employee.newEmployee;
+export const statusSelector = (state: RootState) =>
+    state.employee.currentStatus;
 
 // Reducer
 const employeeReducer = employeeSlice.reducer;
