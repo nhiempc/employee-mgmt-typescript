@@ -21,8 +21,10 @@ function* fetchEmployeeByStatusWorker(
             payload.perPage
         );
         const { data } = res;
-        yield put(employeeActions.setEmployeeByStatus(data));
-        yield put(employeeActions.fetchEmployeeSuccess());
+        if (data) {
+            yield put(employeeActions.setEmployeeByStatus(data));
+            yield put(employeeActions.fetchEmployeeSuccess());
+        }
     } catch (error) {
         yield put(employeeActions.fetchEmployeeFail());
         console.log(error);

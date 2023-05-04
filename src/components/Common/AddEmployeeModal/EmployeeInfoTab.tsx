@@ -1,223 +1,234 @@
-import { Grid, IconButton, TextField, Typography } from '@mui/material';
-import { useState } from 'react';
-import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
-import useStyles, { InputLabelProps } from './styles';
 import { PhotoCamera } from '@mui/icons-material';
+import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
+import { Grid, IconButton, Typography } from '@mui/material';
+import { FastField, Form } from 'formik';
+import { genderOptions, groupOptions } from '../../../common';
+import { INewEmployeeInfo } from '../../../models/IEmployee';
+import InputField from '../CustomFields/InputField';
+import InputMediaField from '../CustomFields/InputMediaField/InputMediaField';
+import SelectField from '../CustomFields/SelectField/SelectField';
+import useStyles, { InputLabelProps } from './styles';
 
-const EmployeeInfoTab = () => {
+type IProps = {
+    employeeInfo: INewEmployeeInfo;
+    errors: any;
+};
+
+const EmployeeInfoTab: React.FunctionComponent<IProps> = ({
+    employeeInfo,
+    errors
+}) => {
     const { classes } = useStyles();
 
-    const [emInfo, setEmInfo] = useState({ status: 1, photoUrl: '' });
-
-    const handleChangeEmployeeInfo = () => {
-        setEmInfo({ ...emInfo, status: 1 });
-    };
-
-    const handleChangeAvatar = () => {};
     return (
-        <Grid container spacing={2} sx={{ pt: 2 }}>
-            <Grid item xs={8}>
-                <Grid container spacing={2}>
-                    <Grid item xs={6}>
-                        <TextField
-                            fullWidth
-                            InputLabelProps={InputLabelProps}
-                            label='Tên nhân viên'
-                            variant='outlined'
-                            size='small'
-                            name='fullName'
-                            value={''}
-                            onChange={handleChangeEmployeeInfo}
-                        />
+        <Form>
+            <Grid container spacing={2} sx={{ pt: 2 }}>
+                <Grid item xs={8}>
+                    <Grid container spacing={2}>
+                        <Grid item xs={6}>
+                            <FastField
+                                error={errors.fullName ? true : false}
+                                helperText={errors.fullName}
+                                name='fullName'
+                                component={InputField}
+                                label='Tên nhân viên'
+                                fullWidth={true}
+                                InputLabelProps={InputLabelProps}
+                                variant='outlined'
+                                size='small'
+                            />
+                        </Grid>
+
+                        <Grid item xs={6}>
+                            <FastField
+                                error={errors.code ? true : false}
+                                helperText={errors.code}
+                                name='code'
+                                component={InputField}
+                                label='Mã nhân viên'
+                                fullWidth={true}
+                                InputLabelProps={InputLabelProps}
+                                variant='outlined'
+                                size='small'
+                            />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <FastField
+                                error={errors.gender ? true : false}
+                                helperText={errors.gender}
+                                name='gender'
+                                fullWidth={true}
+                                options={genderOptions}
+                                component={SelectField}
+                                label='Giới tính'
+                                variant='outlined'
+                                select={true}
+                                SelectProps={{ native: true }}
+                                InputLabelProps={InputLabelProps}
+                                size='small'
+                            />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <FastField
+                                error={errors.dateOfBirth ? true : false}
+                                helperText={errors.dateOfBirth}
+                                name='dateOfBirth'
+                                component={InputField}
+                                label='Ngày sinh'
+                                type='date'
+                                fullWidth={true}
+                                InputLabelProps={InputLabelProps}
+                                variant='outlined'
+                                size='small'
+                            />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <FastField
+                                error={errors.phone ? true : false}
+                                helperText={errors.phone}
+                                name='phone'
+                                component={InputField}
+                                label='Số điện thoại'
+                                type='tel'
+                                fullWidth={true}
+                                InputLabelProps={InputLabelProps}
+                                variant='outlined'
+                                size='small'
+                            />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <FastField
+                                error={errors.email ? true : false}
+                                helperText={errors.email}
+                                name='email'
+                                component={InputField}
+                                label='Email'
+                                type='email'
+                                fullWidth={true}
+                                InputLabelProps={InputLabelProps}
+                                variant='outlined'
+                                size='small'
+                            />
+                        </Grid>
                     </Grid>
 
-                    <Grid item xs={6}>
-                        <TextField
-                            fullWidth
-                            InputLabelProps={InputLabelProps}
-                            label='Mã nhân viên'
-                            variant='outlined'
-                            size='small'
-                            name='code'
-                            value={''}
-                            onChange={handleChangeEmployeeInfo}
-                        />
+                    <Grid container spacing={2} sx={{ pt: 2 }}>
+                        <Grid item xs={6}>
+                            <FastField
+                                error={errors.citizenId ? true : false}
+                                helperText={errors.citizenId}
+                                name='citizenId'
+                                component={InputField}
+                                label='Số CMND/CCCD'
+                                fullWidth={true}
+                                InputLabelProps={InputLabelProps}
+                                variant='outlined'
+                                size='small'
+                            />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <FastField
+                                error={errors.teamId ? true : false}
+                                helperText={errors.teamId}
+                                name='teamId'
+                                fullWidth={true}
+                                options={groupOptions}
+                                component={SelectField}
+                                label='Nhóm'
+                                variant='outlined'
+                                select={true}
+                                SelectProps={{ native: true }}
+                                InputLabelProps={InputLabelProps}
+                                size='small'
+                            />
+                        </Grid>
                     </Grid>
-                    <Grid item xs={6}>
-                        <TextField
-                            label='Giới tính'
-                            fullWidth
-                            InputLabelProps={InputLabelProps}
-                            size='small'
-                            value={''}
-                            name='gender'
-                            onChange={handleChangeEmployeeInfo}
-                            select
-                            SelectProps={{ native: true }}
-                        >
-                            <option value={''}>Chọn giới tính</option>
-                            <option value={1}>Nam</option>
-                            <option value={0}>Nữ</option>
-                        </TextField>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <TextField
-                            id='dateOfBirth'
-                            type='date'
-                            fullWidth
-                            label='Ngày sinh'
-                            variant='outlined'
-                            size='small'
-                            InputLabelProps={InputLabelProps}
-                            name='dateOfBirth'
-                            value={''}
-                            onChange={handleChangeEmployeeInfo}
-                        />
-                    </Grid>
-                    <Grid item xs={6}>
-                        <TextField
-                            fullWidth
-                            InputLabelProps={InputLabelProps}
-                            label='Số điện thoại'
-                            variant='outlined'
-                            size='small'
-                            type='tel'
-                            name='phone'
-                            value={''}
-                            onChange={handleChangeEmployeeInfo}
-                        />
-                    </Grid>
-                    <Grid item xs={6}>
-                        <TextField
-                            fullWidth
-                            InputLabelProps={InputLabelProps}
-                            label='Email'
-                            variant='outlined'
-                            size='small'
-                            name='email'
-                            type='email'
-                            value={''}
-                            onChange={handleChangeEmployeeInfo}
-                        />
-                    </Grid>
-                </Grid>
 
-                <Grid container spacing={2} sx={{ pt: 2 }}>
-                    <Grid item xs={6}>
-                        <TextField
-                            fullWidth
-                            InputLabelProps={InputLabelProps}
-                            label='Số CMND/CCCD'
-                            variant='outlined'
-                            size='small'
-                            name='citizenId'
-                            type='number'
-                            value={''}
-                            onChange={handleChangeEmployeeInfo}
-                        />
-                    </Grid>
-                    <Grid item xs={6}>
-                        <TextField
-                            label='Nhóm'
-                            fullWidth
-                            InputLabelProps={InputLabelProps}
-                            size='small'
-                            value={''}
-                            name='teamId'
-                            onChange={handleChangeEmployeeInfo}
-                            select
-                            SelectProps={{ native: true }}
-                        >
-                            <option value={''}>Chọn nhóm</option>
-                            <option value={1}>Front-end</option>
-                            <option value={2}>Back-end</option>
-                        </TextField>
+                    <Grid container spacing={2} sx={{ pt: 2 }}>
+                        <Grid item xs={12}>
+                            <FastField
+                                error={errors.address ? true : false}
+                                helperText={errors.address}
+                                name='address'
+                                component={InputField}
+                                label='Địa chỉ'
+                                fullWidth={true}
+                                InputLabelProps={InputLabelProps}
+                                variant='outlined'
+                                size='small'
+                            />
+                        </Grid>
                     </Grid>
                 </Grid>
-
-                <Grid container spacing={2} sx={{ pt: 2 }}>
-                    <Grid item xs={12}>
-                        <TextField
-                            fullWidth
-                            InputLabelProps={InputLabelProps}
-                            label='Địa chỉ'
-                            variant='outlined'
-                            size='small'
-                            name='address'
-                            value={''}
-                            onChange={handleChangeEmployeeInfo}
-                        />
-                    </Grid>
-                </Grid>
-            </Grid>
-            <Grid item xs={4} style={{ paddingTop: 0 }}>
-                {emInfo.photoUrl === '' && (
-                    <>
-                        <div className={classes.noImageContainer}>
-                            <IconButton
-                                className={classes.noImageBox}
-                                aria-label='upload picture'
-                                component='label'
-                            >
-                                <input
-                                    hidden
-                                    accept='image/*'
-                                    type='file'
-                                    name='photoUrl'
-                                    onChange={handleChangeAvatar}
-                                />
-                                <CameraAltOutlinedIcon
+                <Grid item xs={4} style={{ paddingTop: 0 }}>
+                    {employeeInfo.photoUrl === '' && (
+                        <>
+                            <div className={classes.noImageContainer}>
+                                <IconButton
                                     className={classes.noImageBox}
+                                    aria-label='upload picture'
+                                    component='label'
+                                >
+                                    <FastField
+                                        component={InputMediaField}
+                                        hidden={true}
+                                        accept='image/*'
+                                        type='file'
+                                        name='photoUrl'
+                                    />
+                                    <CameraAltOutlinedIcon
+                                        className={classes.noImageBox}
+                                    />
+                                </IconButton>
+                            </div>
+                            <Typography
+                                variant='body1'
+                                textAlign={'center'}
+                                sx={{ pt: 2 }}
+                            >
+                                Chọn ảnh đại diện
+                            </Typography>
+                        </>
+                    )}
+                    {employeeInfo.photoUrl && (
+                        <>
+                            <div className={classes.imageContainer}>
+                                <img
+                                    style={{
+                                        width: '100%',
+                                        border: '1px solid black'
+                                    }}
+                                    src={employeeInfo.photoUrl.toString()}
+                                    alt='Avatar'
+                                    className={classes.avatar}
                                 />
-                            </IconButton>
-                        </div>
-                        <Typography
-                            variant='body1'
-                            textAlign={'center'}
-                            sx={{ pt: 2 }}
-                        >
-                            Chọn ảnh đại diện
-                        </Typography>
-                    </>
-                )}
-                {emInfo.photoUrl && (
-                    <>
-                        <div className={classes.imageContainer}>
-                            <img
+                            </div>
+                            <div
                                 style={{
                                     width: '100%',
-                                    border: '1px solid black'
+                                    textAlign: 'center'
                                 }}
-                                src={emInfo.photoUrl}
-                                alt='Avatar'
-                                className={classes.avatar}
-                            />
-                        </div>
-                        <div
-                            style={{
-                                width: '100%',
-                                textAlign: 'center'
-                            }}
-                        >
-                            <IconButton
-                                color='primary'
-                                aria-label='upload picture'
-                                component='label'
                             >
-                                <input
-                                    hidden
-                                    accept='image/*'
-                                    type='file'
-                                    name='photoUrl'
-                                    onChange={handleChangeAvatar}
-                                />
-                                <PhotoCamera />
-                            </IconButton>
-                        </div>
-                    </>
-                )}
+                                <IconButton
+                                    color='primary'
+                                    aria-label='upload picture'
+                                    component='label'
+                                >
+                                    <FastField
+                                        component={InputMediaField}
+                                        hidden={true}
+                                        accept='image/*'
+                                        type='file'
+                                        name='photoUrl'
+                                    />
+                                    <PhotoCamera />
+                                </IconButton>
+                            </div>
+                        </>
+                    )}
+                </Grid>
             </Grid>
-        </Grid>
+        </Form>
     );
 };
 

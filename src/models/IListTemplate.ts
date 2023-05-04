@@ -8,14 +8,14 @@ export type IListTemplate = {
     isEdit?: boolean;
     isDelete?: boolean;
     handleRequestSort?: (e: any, f: string) => void;
-    handleShowInfo?: (id: number | undefined) => void;
+    handleShowInfo?: (id: number) => void;
     handleEdit?: (id: number | undefined) => void;
-    handleDelete?: (id: number | undefined) => void;
+    handleDelete?: (id: number) => void;
     order?: IOrder;
     orderBy?: string;
     maxHeight?: number;
-    editConditionalArr?: string[]
-    infoConditionalArr?: string[]
-    deleteConditionalArr?: string[]
-    isLoading?: boolean
+    editConditionalArr?: string[];
+    infoConditionalArr?: string[];
+    deleteConditionalArr?: string[];
+    isLoading?: boolean;
 };

@@ -3,19 +3,20 @@ import { PATH_NAME } from '../configs';
 import { Route } from 'react-router-dom';
 import MainLayout from '../layouts/MainLayout';
 import NoLayout from '../layouts/NoLayout';
+import { IRoutes } from '../models/ICommon';
 
 const PendingContainer = lazy(() => import('../components/Pending'));
 const ApprovedContainer = lazy(() => import('../components/Approved'));
 const NewEmployeeContainer = lazy(() => import('../components/NewEmployee'));
-const ManageEmployeeContainer = lazy(() =>
-    import('../components/ManageEmployee')
+const ManageEmployeeContainer = lazy(
+    () => import('../components/ManageEmployee')
 );
-const FinishEmployeeContainer = lazy(() =>
-    import('../components/FinishEmployee')
+const FinishEmployeeContainer = lazy(
+    () => import('../components/FinishEmployee')
 );
 const SignIn = lazy(() => import('../components/SignIn'));
 
-const routesConfig = [
+const routesConfig: IRoutes[] = [
     {
         path: PATH_NAME.ROOT,
         layout: MainLayout,
@@ -55,7 +56,7 @@ const routesConfig = [
     }
 ];
 
-const renderRoutes = (routes) => {
+const renderRoutes = (routes: IRoutes[]) => {
     return (
         <>
             {routes ? (

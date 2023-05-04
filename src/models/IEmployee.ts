@@ -1,7 +1,7 @@
 export type IEmployeeInfo = {
     createTime?: string | null;
     modifyTime?: string | null;
-    employeeId: number;
+    employeeId?: number;
     fullName: string | null | undefined;
     code: string | null | undefined;
     phone: string | null | undefined;
@@ -27,6 +27,48 @@ export type IEmployeeInfo = {
     terminatedReason: string | null | undefined;
     storedProfileCode: string | null | undefined;
     note: string | null | undefined;
+};
+
+export const initEmployeeInfo = {
+    fullName: '',
+    code: '',
+    phone: '',
+    email: '',
+    gender: 1,
+    address: '',
+    citizenId: '',
+    dateOfBirth: '',
+    photoUrl: '',
+    teamId: 1,
+    salary: null,
+    salaryScale: null,
+    status: 1,
+    statusLog: '',
+    registerDate: '',
+    registerName: '',
+    registerPosition: '',
+    registerContent: '',
+    appointmentDate: '',
+    rejectedReason: '',
+    terminateRequestDetail: '',
+    terminatedDate: '',
+    terminatedReason: '',
+    storedProfileCode: '',
+    note: ''
+};
+
+export type INewEmployeeInfo = {
+    fullName: string | null | undefined;
+    code: string | null | undefined;
+    gender: number;
+    dateOfBirth: string | null | undefined;
+    phone: string | null | undefined;
+    email: string | null | undefined;
+    citizenId: string | null | undefined;
+    teamId: number;
+    address: string | null | undefined;
+    status: number;
+    photoUrl: string | ArrayBuffer | null | undefined;
 };
 
 export type ICertificates = {
@@ -61,6 +103,12 @@ export type IFamilyRelations = {
 
 export type IEmployee = {
     employeeInfo: IEmployeeInfo;
+    certificates: ICertificates[];
+    familyRelations: IFamilyRelations[];
+};
+
+export type INewEmployee = {
+    employeeInfo: INewEmployeeInfo;
     certificates: ICertificates[];
     familyRelations: IFamilyRelations[];
 };

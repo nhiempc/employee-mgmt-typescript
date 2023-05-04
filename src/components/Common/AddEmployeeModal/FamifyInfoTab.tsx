@@ -1,154 +1,176 @@
-import { Button, Grid, TextField } from '@mui/material';
-import { InputLabelProps } from './styles';
+import { Button, Grid } from '@mui/material';
+import { FastField, Form, Formik } from 'formik';
+import moment from 'moment';
 import { useState } from 'react';
+import {
+    GENDER,
+    familyValidationSchema,
+    genderOptions,
+    headerFamilyData,
+    initFamilyMember
+} from '../../../common';
+import { IFamilyRelations } from '../../../models/IEmployee';
+import { useAppDispatch } from '../../../reduxSaga/hooks';
+import { employeeActions } from '../../../reduxSaga/slices/employee.slice';
+import InputField from '../CustomFields/InputField/InputField';
+import SelectField from '../CustomFields/SelectField/SelectField';
 import ListTemplate from '../ListTemplate/ListTemplate';
-import { headerFamilyData } from '../../../common';
+import { InputLabelProps } from './styles';
 
 const FamifyInfoTab = () => {
-    const [isEditFamilyMember, setIsEditFamilyMember] = useState(false);
+    const dispatch = useAppDispatch();
+    const [familyMembers, setFamilyMembers] = useState<IFamilyRelations[]>([]);
 
     const rowFamilyData: any[] = [];
     const idFamilyData: number[] = [];
 
-    const handleChangeEmployeeFamily = () => {
-        setIsEditFamilyMember(true);
-    };
-
-    const handleAddFamilyMember = () => {};
-
-    const handleUpdateFamilyMember = () => {};
-
-    const handleEditFamilyMemberClick = () => {};
-
-    const handleDeleteFamilyMember = () => {};
+    familyMembers.map((item, index) => {
+        rowFamilyData.push([
+            index + 1,
+            item.name,
+            GENDER[item.gender],
+            moment(item.dateOfBirth).format('DD/MM/YYYY') === 'Invalid date'
+                ? moment().format('DD/MM/YYYY')
+                : moment(item.dateOfBirth).format('DD/MM/YYYY'),
+            item.citizenId,
+            item.relation,
+            item.address
+        ]);
+        idFamilyData.push(Number(item.familyId));
+        return rowFamilyData;
+    });
 
     return (
-        <>
-            <form onSubmit={handleAddFamilyMember}>
-                <Grid container spacing={2} sx={{ pt: 2 }}>
-                    <Grid item xs={3}>
-                        <TextField
-                            fullWidth
-                            InputLabelProps={InputLabelProps}
-                            label='Họ và tên'
-                            variant='outlined'
-                            size='small'
-                            value={''}
-                            name='name'
-                            onChange={handleChangeEmployeeFamily}
-                        />
-                    </Grid>
-                    <Grid item xs={3}>
-                        <TextField
-                            label='Giới tính'
-                            fullWidth
-                            InputLabelProps={InputLabelProps}
-                            size='small'
-                            value={''}
-                            name='gender'
-                            onChange={handleChangeEmployeeFamily}
-                            select
-                            SelectProps={{ native: true }}
-                        >
-                            <option value={''}>Chọn giới tính</option>
-                            <option value={1}>Nam</option>
-                            <option value={0}>Nữ</option>
-                        </TextField>
-                    </Grid>
-                    <Grid item xs={3}>
-                        <TextField
-                            type='date'
-                            fullWidth
-                            label='Ngày sinh'
-                            variant='outlined'
-                            size='small'
-                            InputLabelProps={InputLabelProps}
-                            value={''}
-                            name='dateOfBirth'
-                            onChange={handleChangeEmployeeFamily}
-                        />
-                    </Grid>
-                    <Grid item xs={3}>
-                        <TextField
-                            fullWidth
-                            InputLabelProps={InputLabelProps}
-                            label='Số CMND/CCCD'
-                            variant='outlined'
-                            size='small'
-                            type='number'
-                            value={''}
-                            name='citizenId'
-                            onChange={handleChangeEmployeeFamily}
-                        />
-                    </Grid>
-                    <Grid item xs={3}>
-                        <TextField
-                            fullWidth
-                            InputLabelProps={InputLabelProps}
-                            label='Mối quan hệ'
-                            variant='outlined'
-                            size='small'
-                            value={''}
-                            name='relation'
-                            onChange={handleChangeEmployeeFamily}
-                        />
-                    </Grid>
-                    <Grid item xs={6}>
-                        <TextField
-                            fullWidth
-                            InputLabelProps={InputLabelProps}
-                            label='Địa chỉ'
-                            variant='outlined'
-                            size='small'
-                            value={''}
-                            name='address'
-                            onChange={handleChangeEmployeeFamily}
-                        />
-                    </Grid>
-                    <Grid
-                        item
-                        xs={3}
-                        sx={{
-                            display: 'flex',
-                            justifyContent: 'end',
-                            alignContent: 'end',
-                            alignItems: 'start'
-                        }}
-                    >
-                        {!isEditFamilyMember && (
-                            <Button variant='contained' type='submit'>
-                                Thêm thành viên
-                            </Button>
-                        )}
-                        {isEditFamilyMember && (
-                            <Button
-                                color='warning'
-                                type='button'
-                                onClick={handleUpdateFamilyMember}
-                                variant='contained'
-                            >
-                                Cập nhật
-                            </Button>
-                        )}
-                    </Grid>
-                </Grid>
-            </form>
+        <Formik
+            initialValues={initFamilyMember}
+            onSubmit={(values, { resetForm }) => {
+                setFamilyMembers([...familyMembers, values]);
+                dispatch(employeeActions.addFamilyMember(values));
+                resetForm();
+            }}
+            validationSchema={familyValidationSchema}
+        >
+            {(formikProps) => {
+                const { errors } = formikProps;
+                return (
+                    <>
+                        <Form>
+                            <Grid container spacing={2} sx={{ pt: 2 }}>
+                                <Grid item xs={3}>
+                                    <FastField
+                                        error={errors.name ? true : false}
+                                        helperText={errors.name}
+                                        name='name'
+                                        component={InputField}
+                                        label='Họ và tên'
+                                        fullWidth={true}
+                                        InputLabelProps={InputLabelProps}
+                                        variant='outlined'
+                                        size='small'
+                                    />
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <FastField
+                                        error={errors.gender ? true : false}
+                                        helperText={errors.gender}
+                                        name='gender'
+                                        fullWidth={true}
+                                        options={genderOptions}
+                                        component={SelectField}
+                                        label='Giới tính'
+                                        variant='outlined'
+                                        select={true}
+                                        SelectProps={{ native: true }}
+                                        InputLabelProps={InputLabelProps}
+                                        size='small'
+                                    />
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <FastField
+                                        error={
+                                            errors.dateOfBirth ? true : false
+                                        }
+                                        helperText={errors.dateOfBirth}
+                                        name='dateOfBirth'
+                                        component={InputField}
+                                        label='Ngày sinh'
+                                        type='date'
+                                        fullWidth={true}
+                                        InputLabelProps={InputLabelProps}
+                                        variant='outlined'
+                                        size='small'
+                                    />
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <FastField
+                                        error={errors.citizenId ? true : false}
+                                        helperText={errors.citizenId}
+                                        name='citizenId'
+                                        component={InputField}
+                                        label='Số CMND/CCCD'
+                                        fullWidth={true}
+                                        InputLabelProps={InputLabelProps}
+                                        variant='outlined'
+                                        size='small'
+                                    />
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <FastField
+                                        error={errors.relation ? true : false}
+                                        helperText={errors.relation}
+                                        name='relation'
+                                        component={InputField}
+                                        label='Mối quan hệ'
+                                        fullWidth={true}
+                                        InputLabelProps={InputLabelProps}
+                                        variant='outlined'
+                                        size='small'
+                                    />
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <FastField
+                                        error={errors.address ? true : false}
+                                        helperText={errors.address}
+                                        name='address'
+                                        component={InputField}
+                                        label='Địa chỉ'
+                                        fullWidth={true}
+                                        InputLabelProps={InputLabelProps}
+                                        variant='outlined'
+                                        size='small'
+                                    />
+                                </Grid>
+                                <Grid
+                                    item
+                                    xs={3}
+                                    sx={{
+                                        display: 'flex',
+                                        justifyContent: 'end',
+                                        alignContent: 'end',
+                                        alignItems: 'start'
+                                    }}
+                                >
+                                    <Button variant='contained' type='submit'>
+                                        Thêm thành viên
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                        </Form>
 
-            <Grid container spacing={2} sx={{ mt: 0 }}>
-                <Grid item xs={12}>
-                    <ListTemplate
-                        maxHeight={250}
-                        headerData={headerFamilyData}
-                        isDelete={true}
-                        isEdit={true}
-                        idData={idFamilyData}
-                        rowData={rowFamilyData}
-                        handleEdit={handleEditFamilyMemberClick}
-                        handleDelete={handleDeleteFamilyMember}
-                    />
-                </Grid>
-            </Grid>
-        </>
+                        <Grid container spacing={2} sx={{ mt: 0 }}>
+                            <Grid item xs={12}>
+                                <ListTemplate
+                                    maxHeight={250}
+                                    headerData={headerFamilyData}
+                                    idData={idFamilyData}
+                                    rowData={rowFamilyData}
+                                />
+                            </Grid>
+                        </Grid>
+                    </>
+                );
+            }}
+        </Formik>
     );
 };
 

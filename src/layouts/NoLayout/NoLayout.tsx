@@ -1,8 +1,6 @@
-type IProps = {
-    children: string | JSX.Element | JSX.Element[];
-};
+import { FC } from 'react';
 
-const NoLayout = ({ children }: IProps) => {
+const NoLayout: FC = ({ children }: any) => {
     return <div>{children}</div>;
 };
 export default NoLayout;

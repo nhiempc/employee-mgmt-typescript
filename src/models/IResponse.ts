@@ -1,5 +1,5 @@
 export type IDataList<T> = {
-    data: T[];
+    data: T[] | null;
     code: number;
     message: string;
 };

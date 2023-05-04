@@ -6,7 +6,9 @@ import {
     GET_TOTAL_RECORD
 } from '../common';
 import { HttpMethod, protectedFetcher } from '../helpers/fetchHelper';
-import { IEmployeeInfo } from '../models/IEmployee';
+import { IEmployeeInfo, INewEmployee } from '../models/IEmployee';
+import { IForm } from '../models/IForm';
+import { IRegister } from '../models/IRegister';
 import { IDataList } from '../models/IResponse';
 
 export const employeeApi = {
@@ -31,6 +33,42 @@ export const employeeApi = {
     getEmployeeById(employeeId: number) {
         return protectedFetcher(
             `${GET_EMPLOYEES}/${employeeId}`,
+            HttpMethod.GET
+        );
+    },
+    saveEmployee(employee: INewEmployee) {
+        return protectedFetcher(
+            `${GET_EMPLOYEES}`,
+            HttpMethod.POST,
+            JSON.stringify(employee)
+        );
+    },
+    deleteEmployee(employeeId: number) {
+        return protectedFetcher(
+            `${GET_EMPLOYEES}/${employeeId}/status`,
+            HttpMethod.PUT,
+            JSON.stringify({
+                status: 14
+            })
+        );
+    },
+    saveProfile(employeeId: number, newForm: IForm) {
+        return protectedFetcher(
+            `${GET_EMPLOYEES}/${employeeId}/form`,
+            HttpMethod.PUT,
+            JSON.stringify(newForm)
+        );
+    },
+    sendLeader(employeeId: number, registerInfo: IRegister) {
+        return protectedFetcher(
+            `${GET_EMPLOYEES}/${employeeId}/status`,
+            HttpMethod.PUT,
+            JSON.stringify(registerInfo)
+        );
+    },
+    getForm(employeeId: number) {
+        return protectedFetcher(
+            `${GET_EMPLOYEES}/${employeeId}/form`,
             HttpMethod.GET
         );
     }

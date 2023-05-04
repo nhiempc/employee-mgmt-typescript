@@ -1,13 +1,9 @@
-import React, { useCallback, useState } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 import NavBar from './NavBar/NavBar';
 import TopBar from './TopBar/TopBar';
 import Breadcrumb from '../../components/Common/Breadcrumb/Breadcrumb';
 
-type IProps = {
-    children: string | JSX.Element | JSX.Element[];
-};
-
-const MainLayout = ({ children }: IProps) => {
+const MainLayout: FC = ({ children }: any) => {
     const [isDrawer, setIsDrawer] = useState(true);
 
     const _handleToogleDrawer = useCallback(() => {

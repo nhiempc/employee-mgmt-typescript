@@ -163,7 +163,6 @@ const ListTemplate = ({
                                                 {c}
                                             </StyledTableCell>
                                         ))}
-
                                         <StyledTableCell
                                             key={'c-' + i + '-action'}
                                             align='right'
