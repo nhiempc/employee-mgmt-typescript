@@ -61,15 +61,16 @@ const IncreaseSalary: React.FunctionComponent<IProps> = ({ employeeId }) => {
         useState<boolean>(false);
     const [dataEdit, setDataEdit] = useState<ISalary>(initSalaryForm);
     const [salaryData, setSalaryData] = useState<ISalary>(initSalay);
-    const [deleteId, setDeleteId] = useState(0);
-    const [isEdit, setIsEdit] = useState(false);
+    const [deleteId, setDeleteId] = useState<number>(0);
+    const [isEdit, setIsEdit] = useState<boolean>(false);
     const [severity, setSeverity] = useState<AlertColor>('success');
     const [alertContent, setAlertContent] = useState<string>('');
     const [open, setOpen] = useState<boolean>(false);
-    const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
+    const [isOpenDeleteModal, setIsOpenDeleteModal] = useState<boolean>(false);
     const [isOpenIncreaseSalaryModal, setIsOpenIncreaseSalaryModal] =
-        useState(false);
-    const [isOpenSendLeaderModal, setIsOpenSendLeaderModal] = useState(false);
+        useState<boolean>(false);
+    const [isOpenSendLeaderModal, setIsOpenSendLeaderModal] =
+        useState<boolean>(false);
     const [increaseSalaryList, setIncreaseSalaryList] = useState<ISalary[]>([
         ...increaseSalaryHistory
     ]);

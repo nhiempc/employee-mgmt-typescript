@@ -4,6 +4,7 @@ import createSagaMiddleware from 'redux-saga';
 import rootSaga from './sagas/root.saga';
 import formReducer from './slices/form.slice';
 import salaryReducer from './slices/salary.slice';
+import promoteReducer from './slices/promote.slice';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -11,7 +12,8 @@ const store = configureStore({
     reducer: {
         employee: employeeReducer,
         form: formReducer,
-        salary: salaryReducer
+        salary: salaryReducer,
+        promote: promoteReducer
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(sagaMiddleware)

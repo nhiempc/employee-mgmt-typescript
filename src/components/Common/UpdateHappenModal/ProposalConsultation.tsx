@@ -14,7 +14,7 @@ import {
     SUCCESS_CODE,
     errorMessage,
     headerProposalConsultation,
-    initProposalConsultation
+    initProposalConsultationForm
 } from '../../../common';
 import ListTemplate from '../ListTemplate';
 // styles
@@ -44,7 +44,7 @@ const ProposalConsultation: React.FunctionComponent<IProps> = ({
 
     const [openProposalConsultation, setOpenProposalConsultation] =
         useState(false);
-    const [dataEdit, setDataEdit] = useState(initProposalConsultation);
+    const [dataEdit, setDataEdit] = useState(initProposalConsultationForm);
     const [proposalConsultationData, setProposalConsultationData] = useState(
         {}
     );
@@ -143,7 +143,7 @@ const ProposalConsultation: React.FunctionComponent<IProps> = ({
                         'Thêm đề xuất tham mưu thành công'
                     );
                     setIsOpenProposalConsultationModal(true);
-                    setDataEdit(initProposalConsultation);
+                    setDataEdit(initProposalConsultationForm);
                 } else {
                     handleShowAlert('warning', respone.message);
                 }
@@ -171,7 +171,7 @@ const ProposalConsultation: React.FunctionComponent<IProps> = ({
                         'success',
                         'Cập nhật thông tin đề xuất tham mưu thành công'
                     );
-                    setDataEdit(initProposalConsultation);
+                    setDataEdit(initProposalConsultationForm);
                     setIsEdit(false);
                 } else {
                     handleShowAlert('warning', respone.message);

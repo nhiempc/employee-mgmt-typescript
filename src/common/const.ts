@@ -236,14 +236,14 @@ export const initSalaryForm: any = {
     note: ''
 };
 
-export const initPromote: any = {
+export const initPromoteForm: any = {
     newPosition: '',
     reason: '',
-    date: '',
+    date: moment().format('YYYY-MM-DD'),
     note: ''
 };
 
-export const initProposalConsultation: any = {
+export const initProposalConsultationForm: any = {
     type: '',
     content: '',
     date: '',
@@ -325,6 +325,13 @@ export const salaryValidationSchema = Yup.object().shape({
     salaryScale: Yup.number().required('Bậc lương không được để trống'),
     date: Yup.date().required('Vui lòng chọn ngày'),
     salary: Yup.number().required('Lương không được để trống'),
+    note: Yup.string().required('Ghi chú không được để trống'),
+    reason: Yup.string().required('Lý do không được để trống')
+});
+
+export const promoteValidationSchema = Yup.object().shape({
+    newPosition: Yup.string().required('Vị trí không được để trống'),
+    date: Yup.date().required('Vui lòng chọn ngày'),
     note: Yup.string().required('Ghi chú không được để trống'),
     reason: Yup.string().required('Lý do không được để trống')
 });

@@ -14,6 +14,7 @@ import Header from './Header';
 import IncreaseSalary from './IncreaseSalary';
 import RegisterProfile from './RegisterProfile';
 import useStyles from './styles';
+import Promote from './Promote';
 
 function BootstrapDialogTitle(props: any) {
     const { children, onClose, ...other } = props;
@@ -91,8 +92,8 @@ const UpdateHappenModal: React.FunctionComponent<IProps> = ({
                 <Header employeeId={employeeId} />
                 <RegisterProfile />
                 <IncreaseSalary employeeId={employeeId} />
-                {/* <Promote employeeId={employeeId} />
-                <ProposalConsultation employeeId={employeeId} /> */}
+                <Promote employeeId={employeeId} />
+                {/* <ProposalConsultation employeeId={employeeId} /> */}
             </DialogContent>
             <DialogActions className={classes.dialogActionWrapper}>
                 <Button

@@ -149,7 +149,7 @@ export const increaseSalaryApi = {
 };
 
 export const promoteApi = {
-    getPromoteHistoryHistory(
+    getPromoteHistory(
         employeeId: number,
         page: number = 1,
         perPage: number = 5
