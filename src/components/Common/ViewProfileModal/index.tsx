@@ -18,6 +18,8 @@ import CertificateList from './CertificateList';
 import Profile from './Profile';
 import Resume from './Resume';
 import useStyles from './styles';
+import { useAppSelector } from '../../../reduxSaga/hooks';
+import { statusSelector } from '../../../reduxSaga/slices/employee.slice';
 
 function BootstrapDialogTitle(props: any) {
     const { children, onClose, ...other } = props;
@@ -61,6 +63,7 @@ type IProps = {
     handleClose: () => void;
     profileData: IForm;
     employee: IEmployee;
+    handleStoreProfile?: () => void;
 };
 
 const ViewProfileModal: React.FunctionComponent<IProps> = ({
@@ -68,9 +71,11 @@ const ViewProfileModal: React.FunctionComponent<IProps> = ({
     isOpen,
     handleClose,
     profileData,
-    employee
+    employee,
+    handleStoreProfile
 }) => {
     const { classes } = useStyles();
+    const currentStatus = useAppSelector(statusSelector);
 
     return (
         <BootstrapDialog
@@ -130,6 +135,16 @@ const ViewProfileModal: React.FunctionComponent<IProps> = ({
                 >
                     Đóng
                 </Button>
+                {currentStatus === 10 && (
+                    <Button
+                        variant='contained'
+                        color='primary'
+                        autoFocus
+                        onClick={handleStoreProfile}
+                    >
+                        Nộp lưu hồ sơ
+                    </Button>
+                )}
             </DialogActions>
         </BootstrapDialog>
     );

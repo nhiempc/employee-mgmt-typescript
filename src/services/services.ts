@@ -66,6 +66,13 @@ export const employeeApi = {
             JSON.stringify(newForm)
         );
     },
+    storeProfile(employeeId: number, storeData: any) {
+        return protectedFetcher(
+            `${GET_EMPLOYEES}/${employeeId}/status`,
+            HttpMethod.PUT,
+            JSON.stringify(storeData)
+        );
+    },
     sendLeader(employeeId: number, registerInfo: IRegister) {
         return protectedFetcher(
             `${GET_EMPLOYEES}/${employeeId}/status`,

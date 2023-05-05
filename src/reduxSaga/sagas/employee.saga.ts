@@ -20,9 +20,17 @@ function* fetchEmployeeByStatusWorker(
             payload.page,
             payload.perPage
         );
-        const { data } = res;
-        if (data) {
-            yield put(employeeActions.setEmployeeByStatus(data));
+        if (res) {
+            const { code, data } = res;
+            if (code === 200 && data) {
+                yield put(employeeActions.setEmployeeByStatus(data));
+                yield put(employeeActions.fetchEmployeeSuccess());
+            } else if (code === 404) {
+                yield put(employeeActions.setEmployeeByStatus([]));
+                yield put(employeeActions.fetchEmployeeSuccess());
+            }
+        } else {
+            yield put(employeeActions.setEmployeeByStatus([]));
             yield put(employeeActions.fetchEmployeeSuccess());
         }
     } catch (error) {

@@ -90,8 +90,10 @@ const NewEmployeeContainer = () => {
     const [isOpenDeleteModal, setIsOpenDeleteModal] = useState<boolean>(false);
     const [isOpenProfileModal, setIsOpenProfileModal] =
         useState<boolean>(false);
-    const [isOpenViewProfileModal, setIsOpenViewProfileModal] = useState(false);
-    const [isOpenSendLeaderModal, setIsOpenSendLeaderModal] = useState(false);
+    const [isOpenViewProfileModal, setIsOpenViewProfileModal] =
+        useState<boolean>(false);
+    const [isOpenSendLeaderModal, setIsOpenSendLeaderModal] =
+        useState<boolean>(false);
     const [severity, setSeverity] = useState<AlertColor>('success');
     const [alertContent, setAlertContent] = useState<string>('');
     const [open, setOpen] = useState<boolean>(false);

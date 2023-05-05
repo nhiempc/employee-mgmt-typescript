@@ -2,7 +2,6 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { initEmployeeInfo } from '../../common';
 import {
     ICertificates,
-    IEmployee,
     IEmployeeInfo,
     IFamilyRelations,
     INewEmployee,
@@ -97,13 +96,13 @@ const employeeSlice = createSlice({
             );
             state.employeeByStatus.splice(index, 1);
         },
-        updateEmployee(state, action: PayloadAction<IEmployee>) {
-            let employeeId = action.payload.employeeInfo.employeeId;
+        updateEmployee(state, action: PayloadAction<IEmployeeInfo>) {
+            let employeeId = action.payload.employeeId;
             let index = state.employeeByStatus.findIndex(
                 (item) => item.employeeId === employeeId
             );
             const newList = [...state.employeeByStatus];
-            newList[index] = action.payload.employeeInfo;
+            newList[index] = action.payload;
             state.employeeByStatus = newList;
         },
         addCurrentStatus(state, action: PayloadAction<number>) {
