@@ -99,6 +99,13 @@ export const employeeApi = {
             HttpMethod.PUT,
             JSON.stringify(requiredSupplementData)
         );
+    },
+    sendTerminateRequest(employeeId: number, terminateRequest: any) {
+        return protectedFetcher(
+            `${GET_EMPLOYEES}/${employeeId}/status`,
+            HttpMethod.PUT,
+            JSON.stringify(terminateRequest)
+        );
     }
 };
 
@@ -117,6 +124,26 @@ export const increaseSalaryApi = {
         return protectedFetcher(
             `${GET_EMPLOYEES}/${employeeId}/${GET_INCREASE_SALARY}`,
             HttpMethod.GET
+        );
+    },
+    addIncreaseSalary(employeeId: number, increaseSalaryData: any) {
+        return protectedFetcher(
+            `${GET_EMPLOYEES}/${employeeId}/${GET_INCREASE_SALARY}`,
+            HttpMethod.POST,
+            JSON.stringify(increaseSalaryData)
+        );
+    },
+    updateIncreaseSalary(salaryId: number, increaseSalaryData: any) {
+        return protectedFetcher(
+            `${GET_EMPLOYEES}/${GET_INCREASE_SALARY}/${salaryId}`,
+            HttpMethod.PUT,
+            JSON.stringify(increaseSalaryData)
+        );
+    },
+    deleteIncreaseSalary(salaryId: number) {
+        return protectedFetcher(
+            `${GET_EMPLOYEES}/${GET_INCREASE_SALARY}/${salaryId}`,
+            HttpMethod.DELETE
         );
     }
 };
@@ -137,6 +164,26 @@ export const promoteApi = {
             `${GET_EMPLOYEES}/${employeeId}/${GET_PROMOTE}`,
             HttpMethod.GET
         );
+    },
+    addPromote(employeeId: number, promoteData: any) {
+        return protectedFetcher(
+            `${GET_EMPLOYEES}/${employeeId}/${GET_PROMOTE}`,
+            HttpMethod.POST,
+            JSON.stringify(promoteData)
+        );
+    },
+    updatePromote(promoteId: number, promoteData: any) {
+        return protectedFetcher(
+            `${GET_EMPLOYEES}/${GET_PROMOTE}/${promoteId}`,
+            HttpMethod.PUT,
+            JSON.stringify(promoteData)
+        );
+    },
+    deletePromote(promoteId: number) {
+        return protectedFetcher(
+            `${GET_EMPLOYEES}/${GET_PROMOTE}/${promoteId}`,
+            HttpMethod.DELETE
+        );
     }
 };
 
@@ -155,6 +202,29 @@ export const proposalConsultationApi = {
         return protectedFetcher(
             `${GET_EMPLOYEES}/${employeeId}/${GET_PROPOSAL_CONSULTATION}`,
             HttpMethod.GET
+        );
+    },
+    addProposalConsultation(employeeId: number, proposalConsultationData: any) {
+        return protectedFetcher(
+            `${GET_EMPLOYEES}/${employeeId}/${GET_PROPOSAL_CONSULTATION}`,
+            HttpMethod.POST,
+            JSON.stringify(proposalConsultationData)
+        );
+    },
+    updateProposalConsultation(
+        proposalConsultationId: number,
+        proposalConsultationData: any
+    ) {
+        return protectedFetcher(
+            `${GET_EMPLOYEES}/${GET_PROPOSAL_CONSULTATION}/${proposalConsultationId}`,
+            HttpMethod.PUT,
+            JSON.stringify(proposalConsultationData)
+        );
+    },
+    deleteProposalConsultation(proposalConsultationId: number) {
+        return protectedFetcher(
+            `${GET_EMPLOYEES}/${GET_PROPOSAL_CONSULTATION}/${proposalConsultationId}`,
+            HttpMethod.DELETE
         );
     }
 };

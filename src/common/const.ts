@@ -36,6 +36,47 @@ export const GENDER: any = {
     1: 'Nam'
 };
 
+export const TEAM: any = {
+    1: 'Front-end',
+    2: 'Back-end'
+};
+
+export const headerRegisterProfile: any = [
+    'Hồ sơ',
+    'Ngày đăng kí',
+    'Nội dung',
+    'Ghi chú',
+    'Hành động'
+];
+
+export const headerIncreaseSalary: any = [
+    'Lần thứ',
+    'Bậc',
+    'Lương mới',
+    'Ngày đăng ký',
+    'Lý do',
+    'Ghi chú',
+    'Hành động'
+];
+
+export const headerPromote = [
+    'Lần',
+    'Ngày thăng chức',
+    'Chức vụ hiện tại',
+    'Chức vụ mới',
+    'Lý do',
+    'Ghi chú',
+    'Hành động'
+];
+
+export const headerProposalConsultation = [
+    'Loại',
+    'Ngày đăng ký',
+    'Ghi chú',
+    'Nội dung',
+    'Hành động'
+];
+
 export const SUCCESS_CODE: number = 200;
 
 export const errorMessage: string =
@@ -187,6 +228,28 @@ export const initResume: any = {
     citizenIdIssuingAuthority: ''
 };
 
+export const initSalaryForm: any = {
+    salary: '',
+    salaryScale: '',
+    date: moment().format('YYYY-MM-DD'),
+    reason: '',
+    note: ''
+};
+
+export const initPromote: any = {
+    newPosition: '',
+    reason: '',
+    date: '',
+    note: ''
+};
+
+export const initProposalConsultation: any = {
+    type: '',
+    content: '',
+    date: '',
+    note: ''
+};
+
 export const phoneRegex = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
 
 export const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
@@ -256,6 +319,14 @@ export const resumeValidationSchema = Yup.object().shape({
     citizenIdIssuingAuthority: Yup.string().required(
         'Nơi cấp không được để trống'
     )
+});
+
+export const salaryValidationSchema = Yup.object().shape({
+    salaryScale: Yup.number().required('Bậc lương không được để trống'),
+    date: Yup.date().required('Vui lòng chọn ngày'),
+    salary: Yup.number().required('Lương không được để trống'),
+    note: Yup.string().required('Ghi chú không được để trống'),
+    reason: Yup.string().required('Lý do không được để trống')
 });
 
 export const thFamily = [

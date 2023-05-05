@@ -5,6 +5,8 @@ import { Box } from '@mui/system';
 import {
     GENDER,
     STATUS,
+    SUCCESS_CODE,
+    errorMessage,
     headerApprovedEmployee,
     manageEmployeeStatus
 } from '../../common';
@@ -16,7 +18,12 @@ import {
     totalEmployeeSelector
 } from '../../reduxSaga/slices/employee.slice';
 import moment from 'moment';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import CustomizedSnackbars, {
+    AlertColor
+} from '../Common/SnackBarCustom/SnackBarCustom';
+import { employeeApi } from '../../services';
+import UpdateHappenModal from '../Common/UpdateHappenModal';
 
 const ManageEmployeeContainer = () => {
     const dispatch = useAppDispatch();
@@ -26,6 +33,15 @@ const ManageEmployeeContainer = () => {
     const dataEmployees = useAppSelector(employeeByStatusSelector);
     const isLoading = useAppSelector(isLoadingSelector);
     const totalEmployee = useAppSelector(totalEmployeeSelector);
+
+    const [severity, setSeverity] = useState<AlertColor>('success');
+    const [alertContent, setAlertContent] = useState<string>('');
+    const [open, setOpen] = useState<boolean>(false);
+    const [openUpdateHappenModal, setOpenUpdateHappenModal] =
+        useState<boolean>(false);
+    const [openTerminateRequestModal, setOpenTerminateRequestModal] =
+        useState<boolean>(false);
+    const [employeeId, setEmployeeId] = useState<number>(0);
 
     const rowData: any[][] = [];
     const idData: number[] = [];
@@ -71,24 +87,95 @@ const ManageEmployeeContainer = () => {
         dispatch(employeeActions.fetchEmployeeCount(payload));
     }, [dispatch]);
 
+    const handleShowAlert = (severityValue: AlertColor, content: string) => {
+        setSeverity(severityValue);
+        setAlertContent(content);
+        setOpen(true);
+    };
+
+    const handleOpenUpdateHappenModal = (employeeId: number) => {
+        setOpenUpdateHappenModal(true);
+        setEmployeeId(employeeId);
+    };
+
+    const handleCloseUpdateHappenModal = () => {
+        setOpenUpdateHappenModal(false);
+    };
+
+    const handleOpenTerminateRequestModal = (employeeId: number) => {
+        setOpenTerminateRequestModal(true);
+        setEmployeeId(employeeId);
+    };
+
+    const handleCloseTerminateRequestModal = () => {
+        setOpenTerminateRequestModal(false);
+    };
+
+    const handleSendTerminateRequest = (terminateRequest: any) => {
+        employeeApi
+            .sendTerminateRequest(employeeId, terminateRequest)
+            .then((respone) => {
+                if (respone && respone.code === SUCCESS_CODE) {
+                    handleShowAlert(
+                        'success',
+                        'Gửi yêu cầu chấm dứt thành công'
+                    );
+                    dispatch(
+                        employeeActions.fetchEmployeeByStatus({
+                            status: manageEmployeeStatus,
+                            page,
+                            perPage
+                        })
+                    );
+                    setOpenTerminateRequestModal(false);
+                    setOpenUpdateHappenModal(false);
+                } else {
+                    handleShowAlert('warning', respone.message);
+                    setOpenTerminateRequestModal(false);
+                    setOpenUpdateHappenModal(false);
+                }
+            })
+            .catch((err) => {
+                handleShowAlert('error', errorMessage);
+                setOpenTerminateRequestModal(false);
+                setOpenUpdateHappenModal(false);
+            });
+    };
+
     return (
-        <Box sx={{ padding: '24px' }}>
-            <ListTemplate
-                maxHeight={550}
-                isInfo={true}
-                idData={idData}
-                headerData={headerApprovedEmployee}
-                rowData={rowData}
-                isLoading={isLoading}
+        <>
+            <Box sx={{ padding: '24px' }}>
+                <ListTemplate
+                    maxHeight={550}
+                    isInfo={true}
+                    idData={idData}
+                    headerData={headerApprovedEmployee}
+                    rowData={rowData}
+                    isLoading={isLoading}
+                    handleShowInfo={handleOpenUpdateHappenModal}
+                />
+                <PaginationBase
+                    perPage={perPage}
+                    totalPage={totalPageNum}
+                    pageIndex={page}
+                    changePage={_changePage}
+                    changePerPage={_changePerPage}
+                />
+            </Box>
+            <UpdateHappenModal
+                isOpen={openUpdateHappenModal}
+                title={'Cập nhật diễn biến'}
+                handleClose={handleCloseUpdateHappenModal}
+                employeeId={employeeId}
+                handleTerminate={handleOpenTerminateRequestModal}
             />
-            <PaginationBase
-                perPage={perPage}
-                totalPage={totalPageNum}
-                pageIndex={page}
-                changePage={_changePage}
-                changePerPage={_changePerPage}
+            <CustomizedSnackbars
+                contentSnack={alertContent}
+                severity={severity}
+                open={open}
+                setOpen={setOpen}
             />
-        </Box>
+        </>
     );
 };
 

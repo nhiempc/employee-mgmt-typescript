@@ -14,7 +14,8 @@ InputField.propTypes = {
     error: PropTypes.bool,
     helperText: PropTypes.string,
     FormHelperTextProps: PropTypes.object,
-    InputProps: PropTypes.object
+    InputProps: PropTypes.object,
+    multiline: PropTypes.bool
 };
 
 InputField.defaultProps = {
@@ -37,7 +38,8 @@ function InputField(props: any) {
         error,
         helperText,
         FormHelperTextProps,
-        InputProps
+        InputProps,
+        multiline
     } = props;
     const { name, value, onChange, onBlur } = field;
 
@@ -51,6 +53,7 @@ function InputField(props: any) {
             InputProps={InputProps}
             label={label}
             type={type}
+            multiline={multiline}
             disabled={disabled}
             placeholder={placeholder}
             variant={variant}
