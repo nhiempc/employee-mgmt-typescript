@@ -54,6 +54,22 @@ const promoteSlice = createSlice({
         },
         addPromote(state, action: PayloadAction<IPromote>) {
             state.promoteHistory.push(action.payload);
+        },
+        deletePromote(state, action: PayloadAction<number>) {
+            const rest = state.promoteHistory.filter(
+                (item) => item.promotionId !== action.payload
+            );
+            state.promoteHistory = rest;
+            state.count = state.count - 1;
+        },
+        updatePromote(state, action: PayloadAction<IPromote>) {
+            let id = action.payload.promotionId;
+            let index = state.promoteHistory.findIndex(
+                (item) => item.promotionId === id
+            );
+            const newList = [...state.promoteHistory];
+            newList[index] = action.payload;
+            state.promoteHistory = newList;
         }
     }
 });

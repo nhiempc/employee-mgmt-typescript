@@ -246,7 +246,7 @@ export const initPromoteForm: any = {
 export const initProposalConsultationForm: any = {
     type: '',
     content: '',
-    date: '',
+    date: moment().format('YYYY-MM-DD'),
     note: ''
 };
 
@@ -334,6 +334,13 @@ export const promoteValidationSchema = Yup.object().shape({
     date: Yup.date().required('Vui lòng chọn ngày'),
     note: Yup.string().required('Ghi chú không được để trống'),
     reason: Yup.string().required('Lý do không được để trống')
+});
+
+export const proposalValidationSchema = Yup.object().shape({
+    content: Yup.string().required('Nội dung không được để trống'),
+    date: Yup.date().required('Vui lòng chọn ngày'),
+    note: Yup.string().required('Ghi chú không được để trống'),
+    type: Yup.string().required('Loại tham mưu không được để trống')
 });
 
 export const thFamily = [

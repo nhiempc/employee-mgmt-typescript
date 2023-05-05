@@ -150,17 +150,11 @@ const Promote: React.FunctionComponent<IProps> = ({ employeeId }) => {
                         'success',
                         'Thêm đề xuất thăng chức thành công'
                     );
+                    dispatch(promoteActions.setPromoteHistory(respone.data));
                     dispatch(
-                        promoteActions.fetchPromoteHistory({
-                            employeeId: employeeId,
-                            page,
-                            perPage
-                        })
-                    );
-                    dispatch(
-                        promoteActions.fetchPromoteHistoryCount({
-                            employeeId: employeeId
-                        })
+                        promoteActions.setPromoteHistoryCount(
+                            respone.data.length
+                        )
                     );
                     setIsOpenPromoteModal(true);
                 } else {
@@ -181,13 +175,7 @@ const Promote: React.FunctionComponent<IProps> = ({ employeeId }) => {
                         'success',
                         'Cập nhật thông tin thăng chức thành công'
                     );
-                    dispatch(
-                        promoteActions.fetchPromoteHistory({
-                            employeeId: employeeId,
-                            page,
-                            perPage
-                        })
-                    );
+                    dispatch(promoteActions.updatePromote(respone.data));
                     setIsEdit(false);
                 } else {
                     handleShowAlert('warning', respone.message);
@@ -207,18 +195,7 @@ const Promote: React.FunctionComponent<IProps> = ({ employeeId }) => {
                         'success',
                         'Xóa thông tin thăng chức thành công'
                     );
-                    dispatch(
-                        promoteActions.fetchPromoteHistory({
-                            employeeId: employeeId,
-                            page,
-                            perPage
-                        })
-                    );
-                    dispatch(
-                        promoteActions.fetchPromoteHistoryCount({
-                            employeeId: employeeId
-                        })
-                    );
+                    dispatch(promoteActions.deletePromote(Number(deleteId)));
                     setIsOpenDeleteModal(false);
                 } else {
                     handleShowAlert('warning', respone.message);

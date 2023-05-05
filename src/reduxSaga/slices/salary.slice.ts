@@ -54,6 +54,22 @@ const salarySlice = createSlice({
         },
         addSalary(state, action: PayloadAction<ISalary>) {
             state.salaryHistory.push(action.payload);
+        },
+        deleteSalary(state, action: PayloadAction<number>) {
+            const rest = state.salaryHistory.filter(
+                (item) => item.salaryId !== action.payload
+            );
+            state.salaryHistory = rest;
+            state.count = state.count - 1;
+        },
+        updateSalary(state, action: PayloadAction<ISalary>) {
+            let id = action.payload.salaryId;
+            let index = state.salaryHistory.findIndex(
+                (item) => item.salaryId === id
+            );
+            const newList = [...state.salaryHistory];
+            newList[index] = action.payload;
+            state.salaryHistory = newList;
         }
     }
 });

@@ -159,17 +159,9 @@ const IncreaseSalary: React.FunctionComponent<IProps> = ({ employeeId }) => {
                         'success',
                         'Thêm đề xuất tăng lương thành công'
                     );
+                    dispatch(salaryActions.setSalaryHistory(respone.data));
                     dispatch(
-                        salaryActions.fetchSalaryHistory({
-                            employeeId: employeeId,
-                            page,
-                            perPage
-                        })
-                    );
-                    dispatch(
-                        salaryActions.fetchSalaryHistoryCount({
-                            employeeId: employeeId
-                        })
+                        salaryActions.setSalaryHistoryCount(respone.data.length)
                     );
                     setIsOpenIncreaseSalaryModal(true);
                 } else {
@@ -190,13 +182,7 @@ const IncreaseSalary: React.FunctionComponent<IProps> = ({ employeeId }) => {
                         'success',
                         'Cập nhật thông tin tăng lương thành công'
                     );
-                    dispatch(
-                        salaryActions.fetchSalaryHistory({
-                            employeeId: employeeId,
-                            page,
-                            perPage
-                        })
-                    );
+                    dispatch(salaryActions.updateSalary(respone.data));
                     setIsEdit(false);
                 } else {
                     handleShowAlert('warning', respone.message);
@@ -216,18 +202,7 @@ const IncreaseSalary: React.FunctionComponent<IProps> = ({ employeeId }) => {
                         'success',
                         'Xóa thông tin tăng lương thành công'
                     );
-                    dispatch(
-                        salaryActions.fetchSalaryHistory({
-                            employeeId: employeeId,
-                            page,
-                            perPage
-                        })
-                    );
-                    dispatch(
-                        salaryActions.fetchSalaryHistoryCount({
-                            employeeId: employeeId
-                        })
-                    );
+                    dispatch(salaryActions.deleteSalary(Number(deleteId)));
                     setIsOpenDeleteModal(false);
                 } else {
                     handleShowAlert('warning', respone.message);
