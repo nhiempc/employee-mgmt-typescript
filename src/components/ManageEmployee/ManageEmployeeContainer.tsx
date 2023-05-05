@@ -24,6 +24,7 @@ import CustomizedSnackbars, {
 } from '../Common/SnackBarCustom/SnackBarCustom';
 import { employeeApi } from '../../services';
 import UpdateHappenModal from '../Common/UpdateHappenModal';
+import TerminateRequestModal from '../Common/TerminateRequestModal';
 
 const ManageEmployeeContainer = () => {
     const dispatch = useAppDispatch();
@@ -169,6 +170,15 @@ const ManageEmployeeContainer = () => {
                 employeeId={employeeId}
                 handleTerminate={handleOpenTerminateRequestModal}
             />
+            {employeeId && (
+                <TerminateRequestModal
+                    isOpen={openTerminateRequestModal}
+                    title={'Biểu mẫu nghỉ việc'}
+                    handleClose={handleCloseTerminateRequestModal}
+                    employeeId={employeeId}
+                    handleSendTerminateRequest={handleSendTerminateRequest}
+                />
+            )}
             <CustomizedSnackbars
                 contentSnack={alertContent}
                 severity={severity}
