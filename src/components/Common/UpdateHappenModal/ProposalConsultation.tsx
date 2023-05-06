@@ -86,8 +86,6 @@ const ProposalConsultation: React.FunctionComponent<IProps> = ({
     const [proposalTotal, setProposalTotal] = useState<number>(proposalCount);
     const [btnClicked, setBtnClicked] = useState<string>('');
 
-    console.log(proposalHistory);
-
     useEffect(() => {
         const payload = {
             employeeId: employeeId,

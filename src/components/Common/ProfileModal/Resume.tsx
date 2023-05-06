@@ -98,33 +98,6 @@ const Resume: React.FunctionComponent<IProps> = ({ employeeData }) => {
         >
             {(formikProps) => {
                 const { errors } = formikProps;
-                // if (isEmptyObject(errors) && !isEmptyObject(touched)) {
-                //     let {
-                //         fullName,
-                //         dateOfBirth,
-                //         gender,
-                //         address,
-                //         phone,
-                //         email,
-                //         citizenId,
-                //         photoUrl,
-                //         code
-                //     } = employeeInfo;
-                //     dispatch(
-                //         formActions.addResume({
-                //             ...values,
-                //             fullName,
-                //             dateOfBirth,
-                //             gender,
-                //             address,
-                //             phone,
-                //             email,
-                //             citizenId,
-                //             photoUrl,
-                //             code
-                //         })
-                //     );
-                // }
                 return (
                     <Box>
                         <Grid

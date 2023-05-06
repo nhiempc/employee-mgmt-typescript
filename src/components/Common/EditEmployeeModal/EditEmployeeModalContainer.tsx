@@ -90,15 +90,7 @@ const EditEmployeeModalContainer: React.FunctionComponent<IProps> = ({
 
     const { employeeInfo, certificates, familyRelations } = employeeData;
 
-    const handleChangeTab = (
-        event: React.SyntheticEvent,
-        newValue: string,
-        errors: any,
-        touched: any
-    ) => {
-        // if (isEmptyObject(errors) && !isEmptyObject(touched)) {
-        //     setValue(newValue);
-        // }
+    const handleChangeTab = (event: React.SyntheticEvent, newValue: string) => {
         setValue(newValue);
     };
 
@@ -113,7 +105,7 @@ const EditEmployeeModalContainer: React.FunctionComponent<IProps> = ({
             validationSchema={employeeInfoValidationSchema}
         >
             {(formikProps) => {
-                const { values, errors, touched } = formikProps;
+                const { values, errors } = formikProps;
 
                 return (
                     <BootstrapDialog
@@ -137,17 +129,7 @@ const EditEmployeeModalContainer: React.FunctionComponent<IProps> = ({
                                 <Box>
                                     <TabList
                                         value={value}
-                                        onChange={(
-                                            e: React.SyntheticEvent,
-                                            newValue: string
-                                        ) =>
-                                            handleChangeTab(
-                                                e,
-                                                newValue,
-                                                errors,
-                                                touched
-                                            )
-                                        }
+                                        onChange={handleChangeTab}
                                         aria-label='basic tabs example'
                                     >
                                         <Tab

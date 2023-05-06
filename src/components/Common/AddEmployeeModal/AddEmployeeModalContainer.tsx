@@ -95,10 +95,9 @@ const AddEmployeeModalContainer: React.FunctionComponent<IProps> = ({
         errors: any,
         touched: any
     ) => {
-        // if (isEmptyObject(errors) && !isEmptyObject(touched)) {
-        //     setValue(newValue);
-        // }
-        setValue(newValue);
+        if (isEmptyObject(errors) && !isEmptyObject(touched)) {
+            setValue(newValue);
+        }
     };
 
     return (

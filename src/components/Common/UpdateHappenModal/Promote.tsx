@@ -230,7 +230,7 @@ const Promote: React.FunctionComponent<IProps> = ({ employeeId }) => {
     };
 
     const handleReset = () => {
-        setDataEdit(initPromote);
+        setDataEdit(initPromoteForm);
     };
 
     const handleClickPromote = () => {
